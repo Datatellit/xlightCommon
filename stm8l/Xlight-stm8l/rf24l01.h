@@ -4,8 +4,17 @@
 #include "_global.h"
 #include <stm8l15x.h> //Required for the stdint typedefs
 
+/**********************************
+*  NRF24L01 common defines
+***********************************/
+typedef enum { RF24_PA_MIN = 0,RF24_PA_LOW, RF24_PA_HIGH, RF24_PA_MAX, RF24_PA_ERROR } rf24_pa_dbm_e;
+typedef enum { RF24_1MBPS = 0, RF24_2MBPS, RF24_250KBPS } rf24_datarate_e;
+
 #define ADDRESS_WIDTH                   5
-#define PLOAD_WIDTH                     32
+extern const UC RF24_BASE_RADIO_ID[ADDRESS_WIDTH];
+/**********************************
+*  NRF24L01 common defines
+***********************************/
 
 #define RF24L01_reg_CONFIG      0x00
 #define RF24L01_reg_EN_AA       0x01

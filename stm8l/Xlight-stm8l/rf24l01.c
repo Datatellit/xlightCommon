@@ -3,6 +3,7 @@
 #include <stm8l15x_spi.h>
 #include <stm8l15x_gpio.h>
 
+const UC RF24_BASE_RADIO_ID[ADDRESS_WIDTH] = {0x00,0x54,0x49,0x54,0x44};
 uint8_t rx_addr[ADDRESS_WIDTH];
 uint8_t tx_addr[ADDRESS_WIDTH];
 

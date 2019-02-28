@@ -23,17 +23,7 @@
 
 #pragma data_alignment=1
 
-/**********************************
-*  NRF24L01 Driver Defaults
-***********************************/
-typedef enum { RF24_PA_MIN = 0,RF24_PA_LOW, RF24_PA_HIGH, RF24_PA_MAX, RF24_PA_ERROR } rf24_pa_dbm_e;
-typedef enum { RF24_1MBPS = 0, RF24_2MBPS, RF24_250KBPS } rf24_datarate_e;
-
-#define RF24_CE_PIN		   		A0
-#define RF24_CS_PIN		   	 	A2
-#define RF24_PA_LEVEL 	   	RF24_PA_MAX
-#define RF24_PA_LEVEL_NODE 	RF24_PA_LOW
-#define RF24_PA_LEVEL_GW   	RF24_PA_MAX
+#define PLOAD_WIDTH                     32
 /*
 // RF channel for the sensor net, 0-127
 #define RF24_CHANNEL	   		71
