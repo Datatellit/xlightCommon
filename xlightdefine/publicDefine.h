@@ -35,8 +35,8 @@
 #define NODEID_MIN_SWITCH       40
 #define NODEID_MAX_SWITCH       63
 #define NODEID_MIN_REMOTE       64
-#define NODEID_MAX_REMOTE       71
-#define NODEID_MIN_AC           72
+#define NODEID_MAX_REMOTE       67
+#define NODEID_MIN_AC           68
 #define NODEID_MAX_AC           79
 #define NODEID_MIN_FAN          80
 #define NODEID_MAX_FAN          95

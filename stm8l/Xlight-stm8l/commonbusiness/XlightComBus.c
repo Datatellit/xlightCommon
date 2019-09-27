@@ -17,6 +17,7 @@ void LoadConfig()
         gConfig.enSDTM = 0;
         gConfig.rptTimes = 1;
         gConfig.nodeID = XLA_PRODUCT_NODEID;
+        gConfig.type = XLA_PRODUCT_Type;
         gConfig.rfChannel = RF24_CHANNEL;
         gConfig.rfPowerLevel = RF24_PA_MAX;
         gConfig.rfDataRate = RF24_250KBPS;      

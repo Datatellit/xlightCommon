@@ -508,6 +508,7 @@ void RF24L01_write_payload(uint8_t *data, uint8_t length) {
   
   //Generates an impulsion for CE to send the data
   CE_HIGH;
+  // 0xFF about 120us
   uint16_t delay = 0xFF;
   while(delay--);
   CE_LOW;
@@ -554,7 +555,7 @@ int8_t RF24L01_write_payload_timeout(uint8_t *data, uint8_t length) {
 	CSN_HIGH;	
 	//Generates an impulsion for CE to send the data
 	CE_HIGH;
-	uint16_t delay = 0xFF;
+	uint16_t delay = 0x9FF;
 	while(delay--);
 	CE_LOW;
 	return 0;
