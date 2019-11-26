@@ -51,6 +51,8 @@
 #define NODEID_MAX_AIRPURE      147
 #define NODEID_MIN_CURTAIN      148
 #define NODEID_MAX_CURTAIN      179
+#define NODEID_MIN_MODBUS       180
+#define NODEID_MAX_MODBUS       185
 #define NODEID_MIN_GROUP        192
 #define NODEID_MAX_GROUP        223
 #define NODEID_MIN_TRANS        224
