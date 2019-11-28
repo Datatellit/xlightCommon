@@ -108,4 +108,7 @@
 
 #define UNIQUE_ID_LEN           8
 
+#define ENTER_CRITICAL_SECTION( )  disableInterrupts()
+#define EXIT_CRITICAL_SECTION( )   enableInterrupts()
+
 #endif /* _PUBLICDEFINE_H */
