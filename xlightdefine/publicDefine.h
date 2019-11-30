@@ -10,6 +10,7 @@
 #define UL                        uint32_t
 #define SHORT                     int16_t
 #define LONG                      int32_t
+#define BOOL                      uint8_t
 
 #ifndef TRUE
 #define TRUE                    1
