@@ -39,6 +39,12 @@ uint8_t UsartGetByte(uint8_t *pByte)
   *pByte = USART_ReceiveData8(USART1);
 }
 
+// Transimit a byte without waiting completion
+void UsartPutByte(uint8_t data)
+{
+  USART_SendData8(USART1,(u8)data);//发送8位数据
+}
+
 uint8_t UsartSendByte(uint8_t data)
 {
   USART_SendData8(USART1,(u8)data);//发送8位数据
