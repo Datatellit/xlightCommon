@@ -1,4 +1,5 @@
 #include "UsartDev.h"
+
 void usart_config(uint32_t speed)
 {
   CLK_PeripheralClockConfig (CLK_Peripheral_USART1,ENABLE);     // 开启USART1时钟
@@ -8,6 +9,34 @@ void usart_config(uint32_t speed)
   USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);        // 开启接收中断
   ITC_SetSoftwarePriority(USART1_RX_IRQn, ITC_PriorityLevel_2); // 设置优先级
   USART_Cmd(USART1, ENABLE);    // 使能USART1
+}
+
+void UsartEnableRxTx(bool xRxEnable, bool xTxEnable)
+{
+  /* If xRXEnable enable serial receive interrupts. If xTxENable enable
+   * transmitter empty interrupts.
+  */
+  if(xRxEnable == TRUE)
+  {
+    USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
+  }
+  else
+  {
+    USART_ITConfig(USART1, USART_IT_RXNE, DISABLE);
+  }
+  if(xTxEnable == TRUE)
+  {
+    USART_ITConfig(USART1, USART_IT_TXE, ENABLE);
+  }
+  else
+  {
+    USART_ITConfig(USART1, USART_IT_TXE, DISABLE);
+  }
+}
+  
+uint8_t UsartGetByte(uint8_t *pByte)
+{
+  *pByte = USART_ReceiveData8(USART1);
 }
 
 uint8_t UsartSendByte(uint8_t data)
