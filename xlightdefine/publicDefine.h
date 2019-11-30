@@ -12,14 +12,6 @@
 #define LONG                      int32_t
 #define BOOL                      uint8_t
 
-#ifndef TRUE
-#define TRUE                    1
-#endif
-
-#ifndef FALSE
-#define FALSE                   0
-#endif
-
 // Node type
 #define NODE_TYP_GW               'g'
 #define NODE_TYP_LAMP             'l'
