@@ -156,6 +156,9 @@ typedef enum {
         V_RELAY_MAP,		// Xlight relay keymap
         V_REMOTE_KEY,
 
+        V_MODBUS_READ = 80,     // Read ModBus Register
+        V_MODBUS_WRITE = 81     // Write ModBus Register
+
 } mysensor_data;
 
 
