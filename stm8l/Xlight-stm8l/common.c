@@ -1,5 +1,6 @@
 #include "common.h"
 #include "debugDefine.h"
+#include <string.h>
 
 bool isIdentityEmpty(const UC *pId, UC nLen)
 {

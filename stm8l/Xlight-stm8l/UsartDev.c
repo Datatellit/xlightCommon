@@ -4,10 +4,10 @@ void usart_config(uint32_t speed)
 {
   CLK_PeripheralClockConfig (CLK_Peripheral_USART1,ENABLE);     // 开启USART1时钟
   USART_DeInit(USART1);         // 复位USART1
-  USART_Init(USART1,speed,USART_WordLength_8b,USART_StopBits_1,USART_Parity_No,USART_Mode_Tx);  // USART初始化，波特率9600，8位数据长度，1位停止位，无校验位，发送模式
+  USART_Init(USART1,speed,USART_WordLength_8b,USART_StopBits_1,USART_Parity_No,USART_Mode_Tx | USART_Mode_Rx);  // USART初始化，波特率9600，8位数据长度，1位停止位，无校验位，发送模式
   USART_ClearITPendingBit(USART1, USART_IT_RXNE);       // 清除串口中断标志位
   USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);        // 开启接收中断
-  ITC_SetSoftwarePriority(USART1_RX_IRQn, ITC_PriorityLevel_2); // 设置优先级
+  //ITC_SetSoftwarePriority(USART1_RX_IRQn, ITC_PriorityLevel_2); // 设置优先级
   USART_Cmd(USART1, ENABLE);    // 使能USART1
 }
 
@@ -37,6 +37,7 @@ void UsartEnableRxTx(bool xRxEnable, bool xTxEnable)
 uint8_t UsartGetByte(uint8_t *pByte)
 {
   *pByte = USART_ReceiveData8(USART1);
+  return 1;
 }
 
 // Transimit a byte without waiting completion
