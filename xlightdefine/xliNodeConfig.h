@@ -26,18 +26,6 @@
 #define NCF_PAN_SET_BTN_2               21      // Set Panel Button Action, payload length = 2
 #define NCF_PAN_SET_BTN_3               22      // Set Panel Button Action, payload length = 2
 #define NCF_PAN_SET_BTN_4               23      // Set Panel Button Action, payload length = 2
-#define NCF_PAN_SET_BTN_5               24      // Set Panel Button Action
-#define NCF_PAN_SET_BTN_6               25      // Set Panel Button Action
-#define NCF_PAN_SET_BTN_7               26      // Set Panel Button Action
-#define NCF_PAN_SET_BTN_8               27      // Set Panel Button Action
-#define NCF_PAN_SET_BTN_9               28      // Set Panel Button Action
-#define NCF_PAN_SET_BTN_A               29      // Set Panel Button Action
-#define NCF_PAN_SET_BTN_B               30      // Set Panel Button Action
-#define NCF_PAN_SET_BTN_C               31      // Set Panel Button Action
-#define NCF_PAN_SET_BTN_D               32      // Set Panel Button Action
-#define NCF_PAN_SET_BTN_E               33      // Set Panel Button Action
-#define NCF_PAN_SET_BTN_F               34      // Set Panel Button Action
-#define NCF_PAN_SET_BTN_G               35      // Set Panel Button Action
 
 #define NCF_DATA_ALS_RANGE              50      // Lower and upper threshholds of ALS, payload length = 2
 #define NCF_DATA_TEMP_RANGE             51      // Tempreture threshholds, payload length = 2
@@ -46,6 +34,7 @@
 #define NCF_DATA_PIR_RANGE              54      // PIR control brightness (off br, on br), payload length = 2
 #define NCF_DATA_FN_SCENARIO            60      // Scenario ID for Remote Fn keys (b1=fn_id, b2=scenario_id), payload length = 2
 #define NCF_DATA_FN_HUE                 61      // Hue for Remote Fn keys (b1_7-4=bmDevice, b1_3-0=fn_id, b2-11=Hue), payload length = 12
+#define NCF_CFG_PIRTIMEOUT              62      // Set pir timeout
 
 #define NCF_LEN_DATA_FN_HUE             12
 

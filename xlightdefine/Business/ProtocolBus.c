@@ -119,7 +119,8 @@ uint8_t ParseCommonProtocol(){
   uint8_t _type = rcvMsg.header.type;
   uint8_t _sensor = rcvMsg.header.sensor;
   bool _needAck = (bool)miGetRequestAck();
-  bool _isAck = (bool)miGetAck();
+  //bool _isAck = (bool)miGetAck();
+  uint8_t comMsg = 1;
   
   switch( _cmd ) {
   case C_INTERNAL:
@@ -195,10 +196,20 @@ uint8_t ParseCommonProtocol(){
           }
         }
         break;
+      default:
+        comMsg = 0;
+        break;
       }
-      gIsConfigChanged = TRUE;
-      Msg_NodeConfigAck(_sender, _sensor);
-      return isProcessed;
+      if(comMsg == 1)
+      {
+         gIsConfigChanged = TRUE;
+         Msg_NodeConfigAck(_sender, _sensor);
+         return 1;
+      }
+      else
+      {
+        return 0;
+      }  
     }else if( _type == I_GET_NONCE ) {
         isProcessed = 1;
         // RF Scanner Probe

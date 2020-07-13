@@ -21,10 +21,9 @@
 #ifndef MyMessage_h
 #define MyMessage_h
 
-
 #pragma data_alignment=1
-#define PLOAD_WIDTH                     32
 
+#define PLOAD_WIDTH                     32
 /*
 // RF channel for the sensor net, 0-127
 #define RF24_CHANNEL	   		71
@@ -154,8 +153,8 @@ typedef enum {
         V_RELAY_ON = 65,        // Xlight relay on
         V_RELAY_OFF,            // Xlight relay off
         V_RELAY_MAP,		// Xlight relay keymap
-        V_REMOTE_KEY,
-
+        V_REMOTE_KEY,						// Xlight remote
+        V_SCENARIO,						// Xlight scenario
 } mysensor_data;
 
 

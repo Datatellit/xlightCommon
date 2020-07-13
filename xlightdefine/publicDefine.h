@@ -10,7 +10,6 @@
 #define UL                        uint32_t
 #define SHORT                     int16_t
 #define LONG                      int32_t
-#define BOOL                      uint8_t
 
 // Node type
 #define NODE_TYP_GW               'g'
@@ -52,8 +51,6 @@
 #define NODEID_MAX_AIRPURE      147
 #define NODEID_MIN_CURTAIN      148
 #define NODEID_MAX_CURTAIN      179
-#define NODEID_MIN_MODBUS       180
-#define NODEID_MAX_MODBUS       185
 #define NODEID_MIN_GROUP        192
 #define NODEID_MAX_GROUP        223
 #define NODEID_MIN_TRANS        224
@@ -72,6 +69,8 @@
 #define ZEN_TARGET_FAN          0xB0
 #define ZEN_TARGET_COLORFULBAR  0xB8
 #define ZEN_TARGET_SUPERSENSOR  0xC0
+#define ZEN_TARGET_PIRSENSOR    0xC8
+#define ZEN_TARGET_ALSSENSOR    0xC9
 
 #define IS_TARGET_CURTAIN(nTag)         (nTag >= ZEN_TARGET_CURTAIN && nTag < ZEN_TARGET_AIRPURIFIER)
 #define IS_TARGET_AIRPURIFIER(nTag)     (nTag >= ZEN_TARGET_AIRPURIFIER && nTag < ZEN_TARGET_AIRCONDITION)
@@ -93,7 +92,6 @@
 #define IS_COLORFULBAR_NODEID(nID)   (nID >= NODEID_MIN_COLORFULBAR && nID <= NODEID_MAX_COLORFULBAR)
 #define IS_TRANSMODULE_NODEID(nID)   (nID >= NODEID_MIN_TRANS && nID <= NODEID_MAX_TRANS)
 #define IS_SENSOR_NODEID(nID)        (nID >= NODEID_MIN_SUPERSENSOR && nID <= NODEID_MAX_SUPERSENSOR)
-#define IS_MODBUS_NODEID(nID)        (nID >= NODEID_MIN_MODBUS && nID <= NODEID_MAX_MODBUS)
 
 #define IS_MINE_SUBID(nSID)        ((nSID) == 0 || ((nSID) & gConfig.subID))
 
@@ -108,8 +106,5 @@
 #define SYS_RUNNING                     5
 
 #define UNIQUE_ID_LEN           8
-
-#define ENTER_CRITICAL_SECTION( )  disableInterrupts()
-#define EXIT_CRITICAL_SECTION( )   enableInterrupts()
 
 #endif /* _PUBLICDEFINE_H */

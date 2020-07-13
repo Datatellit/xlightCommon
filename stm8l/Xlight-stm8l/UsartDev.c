@@ -1,55 +1,19 @@
 #include "UsartDev.h"
+#include "stm8l15x_usart.h"
 
 void usart_config(uint32_t speed)
 {
-  CLK_PeripheralClockConfig (CLK_Peripheral_USART1,ENABLE);     // å¼€å¯USART1æ—¶é’Ÿ
-  USART_DeInit(USART1);         // å¤ä½USART1
-  USART_Init(USART1,speed,USART_WordLength_8b,USART_StopBits_1,USART_Parity_No,USART_Mode_Tx | USART_Mode_Rx);  // USARTåˆå§‹åŒ–ï¼Œæ³¢ç‰¹ç‡9600ï¼Œ8ä½æ•°æ®é•¿åº¦ï¼Œ1ä½åœæ­¢ä½ï¼Œæ— æ ¡éªŒä½ï¼Œå‘é€æ¨¡å¼
-  USART_ClearITPendingBit(USART1, USART_IT_RXNE);       // æ¸…é™¤ä¸²å£ä¸­æ–­æ ‡å¿—ä½
-  USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);        // å¼€å¯æ¥æ”¶ä¸­æ–­
-  //ITC_SetSoftwarePriority(USART1_RX_IRQn, ITC_PriorityLevel_2); // è®¾ç½®ä¼˜å…ˆçº§
-  USART_Cmd(USART1, ENABLE);    // ä½¿èƒ½USART1
-}
-
-void UsartEnableRxTx(bool xRxEnable, bool xTxEnable)
-{
-  /* If xRXEnable enable serial receive interrupts. If xTxENable enable
-   * transmitter empty interrupts.
-  */
-  if(xRxEnable == TRUE)
-  {
-    USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
-  }
-  else
-  {
-    USART_ITConfig(USART1, USART_IT_RXNE, DISABLE);
-  }
-  if(xTxEnable == TRUE)
-  {
-    USART_ITConfig(USART1, USART_IT_TXE, ENABLE);
-  }
-  else
-  {
-    USART_ITConfig(USART1, USART_IT_TXE, DISABLE);
-  }
-}
-  
-uint8_t UsartGetByte(uint8_t *pByte)
-{
-  *pByte = USART_ReceiveData8(USART1);
-  return 1;
-}
-
-// Transimit a byte without waiting completion
-void UsartPutByte(uint8_t data)
-{
-  USART_SendData8(USART1,(u8)data);//å‘é€8ä½æ•°æ®
+  // ¿ªÆôUSART1Ê±ÖÓ
+  CLK_PeripheralClockConfig (CLK_Peripheral_USART1, ENABLE);
+  // USART³õÊ¼»¯£¬²¨ÌØÂÊ9600£¬8Î»Êı¾İ³¤¶È£¬1Î»Í£Ö¹Î»£¬ÎŞĞ£ÑéÎ»£¬·¢ËÍÄ£Ê½
+  USART_Init(USART1,speed, USART_WordLength_8b, USART_StopBits_1, USART_Parity_No, USART_Mode_Tx);
+  USART_Cmd (USART1,ENABLE);//Ê¹ÄÜUSART1
 }
 
 uint8_t UsartSendByte(uint8_t data)
 {
-  USART_SendData8(USART1,(u8)data);//å‘é€8ä½æ•°æ®
-  while(!USART_GetFlagStatus (USART1,USART_FLAG_TXE));//ç­‰å¾…å‘é€å®Œæ¯•
+  USART_SendData8(USART1,(u8)data);//·¢ËÍ8Î»Êı¾İ
+  while(!USART_GetFlagStatus (USART1,USART_FLAG_TXE));//µÈ´ı·¢ËÍÍê±Ï
   return data;
 }
 

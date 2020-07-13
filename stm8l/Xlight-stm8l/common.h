@@ -1,5 +1,6 @@
 #ifndef _COMMON_H
 #define _COMMON_H
+
 #include "stm8l15x.h"
 #include "publicDefine.h"
 

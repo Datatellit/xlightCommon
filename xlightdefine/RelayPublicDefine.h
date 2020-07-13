@@ -37,7 +37,6 @@
 #define BTN_OBJ_DEFAULT_KEY             0       // corresponding relay key
 #define BTN_OBJ_SCAN_KEY_MAP            1       // scan key map and act on keys one by one
 #define BTN_OBJ_LOOP_KEY_MAP            2       // get one key from key map, act on it, and move to the next key
-#define BTN_OBJ_EXCLUDE_KEY_MAP         3       // and only open corresponding relay key
 
 #define BTN_ACT_TOGGLE                  0       // toggle relay key
 #define BTN_ACT_ON                      1       // turn on relay key
