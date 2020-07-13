@@ -118,7 +118,7 @@ typedef enum {
 	V_WATT, // S_POWER, S_LIGHT, S_DIMMER, S_RGB, S_RGBW. Watt value for power meters
 	V_KWH, // S_POWER. Accumulated number of KWH for a power meter
 	V_SCENE_ON, // S_SCENE_CONTROLLER. Turn on a scene
-	V_SCENE_OFF, // S_SCENE_CONTROLLER. Turn of a scene
+	V_SCENE_OFF, // S_SCENE_CONTROLLER. Turn off a scene
 	V_HEATER, // Deprecated. Use V_HVAC_FLOW_STATE instead.
 	V_HVAC_FLOW_STATE=21,  // S_HEATER, S_HVAC. HVAC flow state ("Off", "HeatOn", "CoolOn", or "AutoChangeOver")
 	V_HVAC_SPEED, // S_HVAC, S_HEATER. HVAC/Heater fan speed ("Min", "Normal", "Max", "Auto")
@@ -151,11 +151,15 @@ typedef enum {
 	V_HVAC_SETPOINT_HEAT, // S_HEATER, S_HVAC. HVAC/Heater setpoint (Integer between 0-100)
 	V_HVAC_FLOW_MODE, // S_HVAC. Flow mode for HVAC ("Auto", "ContinuousOn", "PeriodicOn")
         
-        V_RELAY_ON = 65,        // Xlight relay on
-        V_RELAY_OFF,            // Xlight relay off
-        V_RELAY_MAP,		// Xlight relay keymap
-        V_REMOTE_KEY,
+    V_RELAY_ON = 65,        // Xlight relay on
+    V_RELAY_OFF,            // Xlight relay off
+    V_RELAY_MAP,		// Xlight relay keymap
+    V_REMOTE_KEY,
+    V_REMOTE_SCENARIO,	// Xlight remote scenario
+    V_FAN=69,               // FAN
 
+    V_MODBUS_READ = 80,     // Read ModBus Register
+    V_MODBUS_WRITE = 81     // Write ModBus Register
 } mysensor_data;
 
 

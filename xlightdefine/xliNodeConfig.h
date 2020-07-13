@@ -26,6 +26,18 @@
 #define NCF_PAN_SET_BTN_2               21      // Set Panel Button Action, payload length = 2
 #define NCF_PAN_SET_BTN_3               22      // Set Panel Button Action, payload length = 2
 #define NCF_PAN_SET_BTN_4               23      // Set Panel Button Action, payload length = 2
+#define NCF_PAN_SET_BTN_5               24      // Set Panel Button Action
+#define NCF_PAN_SET_BTN_6               25      // Set Panel Button Action
+#define NCF_PAN_SET_BTN_7               26      // Set Panel Button Action
+#define NCF_PAN_SET_BTN_8               27      // Set Panel Button Action
+#define NCF_PAN_SET_BTN_9               28      // Set Panel Button Action
+#define NCF_PAN_SET_BTN_A               29      // Set Panel Button Action
+#define NCF_PAN_SET_BTN_B               30      // Set Panel Button Action
+#define NCF_PAN_SET_BTN_C               31      // Set Panel Button Action
+#define NCF_PAN_SET_BTN_D               32      // Set Panel Button Action
+#define NCF_PAN_SET_BTN_E               33      // Set Panel Button Action
+#define NCF_PAN_SET_BTN_F               34      // Set Panel Button Action
+#define NCF_PAN_SET_BTN_G               35      // Set Panel Button Action
 
 #define NCF_DATA_ALS_RANGE              50      // Lower and upper threshholds of ALS, payload length = 2
 #define NCF_DATA_TEMP_RANGE             51      // Tempreture threshholds, payload length = 2
