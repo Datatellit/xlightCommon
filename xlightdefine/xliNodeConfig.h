@@ -13,7 +13,7 @@
 #define NCF_DEV_ASSOCIATE               10      // Associate node to device(s), payload length = 2 to 8, a device per uint16_t
 #define NCF_DEV_EN_SDTM                 11      // Simple Direct Test Mode flag, payload length = 2
 #define NCF_DEV_MAX_NMRT                12      // Max. Node Message Repeat Times, payload length = 2
-#define NCF_DEV_SET_SUBID               13      // Set device subid, payload length = 2
+#define NCF_DEV_SET_SUBID               13      // Set device subid, payload length = 2 [:subID][:devType]
 #define NCF_DEV_CONFIG_MODE             14      // Put Device into Config Mode, payload length = 2
 #define NCF_DEV_SET_RELAY_NODE          15      // Set relay node id & subID, payload length = 2
 #define NCF_DEV_SET_RELAY_KEYS          16      // Set relay keys, payload length = 2 to 4

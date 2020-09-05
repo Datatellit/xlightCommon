@@ -141,7 +141,9 @@ uint8_t ParseCommonProtocol(){
         break;     
       case NCF_DEV_SET_SUBID:
           isProcessed = 1;
-          gConfig.subID = rcvMsg.payload.data[0];
+          // [:subID][:devType]
+          if(_lenPayl >= 1) gConfig.subID = rcvMsg.payload.data[0];
+          if(_lenPayl >= 2) gConfig.type = rcvMsg.payload.data[1];
         break;
       case NCF_DEV_MAX_NMRT:
         isProcessed = 1;
