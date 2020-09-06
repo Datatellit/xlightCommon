@@ -141,12 +141,16 @@ typedef enum
 // RF channel for the sensor net, 0-127
 #define RF24_CHANNEL	   		100
 
-// System Startup Status
-#define SYS_INIT                        0
-#define SYS_RESET                       1
-#define SYS_WAIT_NODEID                 2
-#define SYS_WAIT_PRESENTED              3
-#define SYS_RUNNING                     5
+// System Status
+#define SYS_ST_INIT             0   // Also as Off state
+#define SYS_ST_RUNNING          1   // Normal Working
+#define SYS_ST_ON_BATTERY       2   // Working on battery
+#define SYS_ST_LOW_BATTERY      3   // Working on low-battery
+#define SYS_ST_UPDATE           5
+#define SYS_ST_ERROR            6
+#define SYS_ST_SETUP            7   // WAIT_NODEID, WAIT_PRESENTED
+#define SYS_ST_SLEEP            8   // Low Power Consumption
+#define SYS_ST_RESET            9
 
 #define UNIQUE_ID_LEN           8
 
