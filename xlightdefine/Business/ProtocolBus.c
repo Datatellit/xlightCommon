@@ -144,54 +144,47 @@ uint8_t ParseCommonProtocol(){
           // [:subID][:devType]
           if(_lenPayl >= 1) gConfig.subID = rcvMsg.payload.data[0];
           if(_lenPayl >= 2) gConfig.type = rcvMsg.payload.data[1];
-        break;
+          gResendPresentation = TRUE;
+          break;
       case NCF_DEV_MAX_NMRT:
         isProcessed = 1;
         gConfig.rptTimes = rcvMsg.payload.data[0];
         break;
       case NCF_DEV_SET_RF:
         isProcessed = 1;
-        if( _lenPayl >= 1)
-        {
+        if( _lenPayl >= 1) {
            // Node base rf info Config
           uint8_t newNid = rcvMsg.payload.data[0];
-          if(!isNodeIdInvalid(newNid))
-          {
+          if(!isNodeIdInvalid(newNid)) {
             gConfig.nodeID = newNid;
             gResetRF = TRUE;
+            gResendPresentation = TRUE;
           }
         }
-        if(_lenPayl >= 2) 
-        {
+        if(_lenPayl >= 2) {
           uint8_t rfchannel = rcvMsg.payload.data[1];
-          if(rfchannel != 0)
-          {
+          if(rfchannel != 0) {
             gConfig.rfChannel = rfchannel;
             gResetRF = TRUE;
           }
         }
-        if(_lenPayl >= 3)
-        {
+        if(_lenPayl >= 3) {
           uint8_t subid = rcvMsg.payload.data[2];
           gConfig.subID = subid;
+          gResendPresentation = TRUE;
         }
-        if(_lenPayl >= 4)
-        {
+        if(_lenPayl >= 4) {
           uint8_t netlen = _lenPayl - 3;
           uint8_t bnetvalid = 0;
-          for(uint8_t i = 0;i<netlen;i++)
-          {
-            if(rcvMsg.payload.data[3+i] != 0) 
-            {
+          for(uint8_t i = 0;i<netlen;i++) {
+            if(rcvMsg.payload.data[3+i] != 0) {
               bnetvalid = 1;
               break;
             }
           }
-          if(bnetvalid)
-          {
-            memset(gConfig.NetworkID,0x00,sizeof(gConfig.NetworkID));
-            for(uint8_t j = 0;j<netlen;j++)
-            {
+          if(bnetvalid) {
+            memset(gConfig.NetworkID, 0x00, sizeof(gConfig.NetworkID));
+            for(uint8_t j = 0;j<netlen;j++) {
               gConfig.NetworkID[4-j] = rcvMsg.payload.data[3+j];
             }
             gResetRF = TRUE;
@@ -202,17 +195,14 @@ uint8_t ParseCommonProtocol(){
         comMsg = 0;
         break;
       }
-      if(comMsg == 1)
-      {
+      if(comMsg == 1) {
          gIsConfigChanged = TRUE;
          Msg_NodeConfigAck(_sender, _sensor);
          return 1;
-      }
-      else
-      {
+      } else {
         return 0;
       }  
-    }else if( _type == I_GET_NONCE ) {
+    } else if( _type == I_GET_NONCE ) {
         isProcessed = 1;
         // RF Scanner Probe
         if( _sender == NODEID_RF_SCANNER || _sender == NODEID_GATEWAY) {
@@ -222,29 +212,23 @@ uint8_t ParseCommonProtocol(){
           } else if( rcvMsg.payload.data[0] == SCANNER_SETUP_RF ) {
             if(!IS_MINE_SUBID(_sensor)) return 0;  
             Process_SetupRF(rcvMsg.payload.data + 1,_lenPayl-1);
-          }
-          else if( rcvMsg.payload.data[0] == SCANNER_SETUPDEV_RF ) {
+          } else if( rcvMsg.payload.data[0] == SCANNER_SETUPDEV_RF ) {
             if(!isIdentityEqual(rcvMsg.payload.data + 1,_uniqueID,UNIQUE_ID_LEN)) return 0;
             Process_SetupRF(rcvMsg.payload.data + 1 + UNIQUE_ID_LEN,_lenPayl-1 - UNIQUE_ID_LEN);
-          }
-          else if( rcvMsg.payload.data[0] == SCANNER_SETCONFIG ) {
-            
+          } else if( rcvMsg.payload.data[0] == SCANNER_SETCONFIG ) {
             if(!IS_MINE_SUBID(_sensor)) return 0;          
             uint8_t cfg_len = _lenPayl - 2;
             Process_SetConfig(cfg_len);
-          }
-          else if( rcvMsg.payload.data[0] == SCANNER_SETDEV_CONFIG ) {  
+          } else if( rcvMsg.payload.data[0] == SCANNER_SETDEV_CONFIG ) {  
             if(!isIdentityEqual(rcvMsg.payload.data + 2,_uniqueID,UNIQUE_ID_LEN)) return 0;
             uint8_t cfg_len = _lenPayl - 10;
             Process_SetDevConfig(cfg_len);
-          }
-          else if( rcvMsg.payload.data[0] == SCANNER_GETDEV_CONFIG ) {  
+          } else if( rcvMsg.payload.data[0] == SCANNER_GETDEV_CONFIG ) {  
             uint8_t offset = rcvMsg.payload.data[1];
             uint8_t cfgblock_len = rcvMsg.payload.data[10];
             if(!isIdentityEqual(rcvMsg.payload.data + 2,_uniqueID,UNIQUE_ID_LEN)) return 0;
             MsgScanner_ConfigAck(offset,cfgblock_len,TRUE); 
-          }
-          else if( rcvMsg.payload.data[0] == SCANNER_GETCONFIG ) { 
+          } else if( rcvMsg.payload.data[0] == SCANNER_GETCONFIG ) { 
             if(!IS_MINE_SUBID(_sensor)) return 0;  
             uint8_t offset = rcvMsg.payload.data[1];
             uint8_t cfgblock_len = rcvMsg.payload.data[2];
@@ -352,16 +336,12 @@ void Process_SetupRF(const UC *rfData,uint8_t rflen)
       bNeedResetNode = TRUE;
     }
   }
-  if(bNeedResetNode)
-    gResetNode = TRUE;
-  if(gResetNode || gResetRF || bNeedChangeCfg)
-  {
+  if(bNeedResetNode) gResetNode = TRUE;
+  if(gResetNode || gResetRF || bNeedChangeCfg) {
     gIsConfigChanged = TRUE;
   }
 }
 //----------------------------------------------
-
-
 void Msg_NodeConfigAck(uint8_t _to, uint8_t _ncf) {
   build(_to, _ncf, C_INTERNAL, I_CONFIG, 0, 1);
 

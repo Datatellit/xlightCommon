@@ -23,19 +23,19 @@ UC NodeID2Type(const UC _nid) {
     return (UC)lv_ntype;
 }
 
-bool isIdentityEmpty(const UC *pId, UC nLen)
+bool isIdentityEmpty(const UC *pId, const UC nLen)
 {
   for( int i = 0; i < nLen; i++ ) { if(pId[i] > 0) return FALSE; }
   return TRUE;
 }
 
-bool isIdentityEqual(const UC *pId1, const UC *pId2, UC nLen)
+bool isIdentityEqual(const UC *pId1, const UC *pId2, const UC nLen)
 {
   for( int i = 0; i < nLen; i++ ) { if(pId1[i] != pId2[i]) return FALSE; }
   return TRUE;
 }
 
-uint8_t *Read_UniqueID(uint8_t *UniqueID, uint16_t Length)  
+uint8_t *Read_UniqueID(uint8_t *UniqueID, const uint16_t Length)  
 {
   Flash_ReadBuf(UNIQUE_ID_ADDRESS, UniqueID, Length);
   return UniqueID;
@@ -60,22 +60,20 @@ void feed_wwdg(void) {
 
 // is flash writting
 uint8_t flashWritting = 0;
-int8_t wait_flashflag_status(uint8_t flag,uint8_t status)
+int8_t wait_flashflag_status(const uint8_t flag, const uint8_t status)
 {
     uint16_t timeout = 60000;
-    while( FLASH_GetFlagStatus(flag)== status && timeout--)
-    {
+    while( FLASH_GetFlagStatus(flag)== status && timeout--) {
       feed_wwdg();
     }
-    if(!timeout) 
-    {
+    if(!timeout) {
       //printlog("timeout!");
       return 1;
     }
     return 0;
 }
 
-void Flash_ReadBuf(uint32_t Address, uint8_t *Buffer, uint16_t Length) {
+void Flash_ReadBuf(const uint32_t Address, uint8_t *Buffer, const uint16_t Length) {
   assert_param(IS_FLASH_ADDRESS(Address));
   assert_param(IS_FLASH_ADDRESS(Address+Length));
   
@@ -84,11 +82,10 @@ void Flash_ReadBuf(uint32_t Address, uint8_t *Buffer, uint16_t Length) {
   }
 }
 
-bool Flash_WriteBuf(uint32_t Address, uint8_t *Buffer, uint16_t Length) {
+bool Flash_WriteBuf(const uint32_t Address, uint8_t *Buffer, const uint16_t Length) {
   assert_param(IS_FLASH_DATA_EEPROM_ADDRESS(Address));
   assert_param(IS_FLASH_DATA_EEPROM_ADDRESS(Address+Length));
-  if(flashWritting == 1)
-  {
+  if( flashWritting == 1 ) {
     //printlog("iswriting");
     return FALSE;
   }
@@ -123,10 +120,9 @@ bool Flash_WriteBuf(uint32_t Address, uint8_t *Buffer, uint16_t Length) {
   return rc;
 }
  
-bool Flash_WriteDataBlock(uint16_t nStartBlock, uint8_t *Buffer, uint16_t Length) {
+bool Flash_WriteDataBlock(const uint16_t nStartBlock, uint8_t *Buffer, const uint16_t Length) {
   // Init Flash Read & Write
-  if(flashWritting == 1) 
-  {
+  if( flashWritting ==  1) {
     //printlog("iswriting");
     return FALSE;
   }
@@ -140,8 +136,7 @@ bool Flash_WriteDataBlock(uint16_t nStartBlock, uint8_t *Buffer, uint16_t Length
   for( uint16_t block = nStartBlock; block < nStartBlock + nBlockNum; block++ ) {
     memset(WriteBuf, 0x00, FLASH_BLOCK_SIZE);
     uint8_t maxLen = FLASH_BLOCK_SIZE;
-    if(block == nStartBlock + nBlockNum -1)
-    {
+    if( block == nStartBlock + nBlockNum - 1 ) {
       maxLen = Length - (nBlockNum -1)*FLASH_BLOCK_SIZE;
     }
     for( uint16_t i = 0; i < maxLen; i++ ) {

@@ -69,4 +69,16 @@
 #define WATT_RM_CUBIC_PERCENTAGE        4
 #define WATT_RM_TABLE_PERCENTAGE        10
 
+typedef struct      // Exact 6 bytes
+{
+  UC sw_br                    :8;
+  //UC br                     :7;           // Brightness of white [0..100]
+  //UC sw                     :1;           // On/Off state
+
+  US CCT                      :16;          // CCT (warm or cold) [2700..6500]
+  UC R                        :8;           // Brightness of red
+  UC G                        :8;           // Brightness of green
+  UC B                        :8;           // Brightness of blue
+} Hue_t;
+
 #endif /* _LIGHTPUBLICDEFINE_H */

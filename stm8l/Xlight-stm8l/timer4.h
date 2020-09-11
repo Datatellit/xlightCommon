@@ -7,7 +7,7 @@
 // Time Parameters
 // Could be CLK_SYSCLKDiv_1, CLK_SYSCLKDiv_2, CLK_SYSCLKDiv_4
 // while bigger value is supposed to save power
-#define SYS_CLOCK_DIVIDER       CLK_SYSCLKDiv_2
+#define SYS_CLOCK_DIVIDER       CLK_SYSCLKDiv_1
 
 // We will make it to 2ms, (1/16MHz)*128*250 = 2mS or (1/8MHz)*128*125 = 2mS
 #define TIM4_PERIOD             (0xFA >> SYS_CLOCK_DIVIDER)

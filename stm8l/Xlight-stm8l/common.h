@@ -34,15 +34,15 @@
 // Return NodeType by giving NodeID
 UC NodeID2Type(const UC _nid);
 
-bool isIdentityEmpty(const UC *pId, UC nLen);
-bool isIdentityEqual(const UC *pId1, const UC *pId2, UC nLen);
-uint8_t *Read_UniqueID(uint8_t *UniqueID, uint16_t Length);
+bool isIdentityEmpty(const UC *pId, const UC nLen);
+bool isIdentityEqual(const UC *pId1, const UC *pId2, const UC nLen);
+uint8_t *Read_UniqueID(uint8_t *UniqueID, const uint16_t Length);
 
 void wwdg_init();
 void feed_wwdg(void);
-int8_t wait_flashflag_status(uint8_t flag,uint8_t status);
-void Flash_ReadBuf(uint32_t Address, uint8_t *Buffer, uint16_t Length);
-bool Flash_WriteBuf(uint32_t Address, uint8_t *Buffer, uint16_t Length);
-bool Flash_WriteDataBlock(uint16_t nStartBlock, uint8_t *Buffer, uint16_t Length);
+int8_t wait_flashflag_status(const uint8_t flag, const uint8_t status);
+void Flash_ReadBuf(const uint32_t Address, uint8_t *Buffer, const uint16_t Length);
+bool Flash_WriteBuf(const uint32_t Address, uint8_t *Buffer, const uint16_t Length);
+bool Flash_WriteDataBlock(const uint16_t nStartBlock, uint8_t *Buffer, const uint16_t Length);
 
 #endif /* _COMMON_H */
