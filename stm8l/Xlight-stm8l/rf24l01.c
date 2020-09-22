@@ -8,6 +8,9 @@ uint8_t rx_addr[ADDRESS_WIDTH];
 uint8_t tx_addr[ADDRESS_WIDTH];
 
 void RF24L01_init(void) {
+  
+  RF24L01_DeInit();
+  
   // NRF_SCK
   GPIO_Init(GPIOB, GPIO_Pin_5, GPIO_Mode_Out_PP_High_Fast);
   
@@ -240,8 +243,12 @@ void RF24L01_setup(uint8_t channel, uint8_t datarate, uint8_t powerlevel, uint8_
   
   RF24L01_reg_SETUP_RETR_content SETUP_RETR;
   *((uint8_t *)&SETUP_RETR) = 0;
-  SETUP_RETR.ARD = 0x02;
-  SETUP_RETR.ARC = 0x0f;
+  //SETUP_RETR.ARD = 0x02;    // Retry delay: (2 + 1) * 250um = 750um; Worst scenario: 11.25ms
+  SETUP_RETR.ARD = 0x05;    // Retry delay: (5 + 1) * 250um = 1500um; Worst scenario: 22.5ms
+  //SETUP_RETR.ARD = 0x08;    // Retry delay: (8 + 1) * 250um = 2250um; Worst scenario: 33.75ms
+  //SETUP_RETR.ARD = 0x0B;    // Retry delay: (11 + 1) * 250um = 3000um; Worst scenario: 45ms
+  //SETUP_RETR.ARD = 0x0f;    // Retry delay: (15 + 1) * 250um = 4000um; Worst scenario: 60ms
+  SETUP_RETR.ARC = 0x0f;    // Retry times: 15
   RF24L01_write_register(RF24L01_reg_SETUP_RETR, ((uint8_t *)&SETUP_RETR), 1);  
 
   RF24L01_reg_DYNPD_content DYN_PAYLOAD;

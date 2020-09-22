@@ -46,6 +46,7 @@ eLightType lightType = T_CONSTANT_LIGHT;
 COLOR curColor = CYAN;
 uint8_t isTwinkleStart = 0;
 uint8_t isOnIdleState = 1;
+uint8_t m_bPinReversed = 0;     // 0: Low off; 1: High off
 
 uint8_t led_GetIsOnIdleState()
 {
@@ -227,23 +228,26 @@ static void TIMLightPwm_ClkGpioConfig(void)
   /* Enable TIM1 clock */
   CLK_PeripheralClockConfig(CLK_Peripheral_TIM1, ENABLE);
   CLK_PeripheralClockConfig(CLK_Peripheral_TIM3, ENABLE);
-  GPIO_Init(GPIOD, GPIO_Pin_4 | GPIO_Pin_2  , GPIO_Mode_Out_PP_High_Fast);
-  GPIO_Init(GPIOD, GPIO_Pin_0 , GPIO_Mode_Out_PP_High_Fast);
+  GPIO_Init(GPIOD, GPIO_Pin_4 | GPIO_Pin_2 | GPIO_Pin_0, GPIO_Mode_Out_PP_Low_Slow);
 }
 
 static void TIMPWMFunction_Config(void)
 {
   TIM1_DeInit();
   TIM3_DeInit();
+  
+  TIM1_OCMode_TypeDef lv_pwm1Type = (m_bPinReversed ? TIM1_OCMode_PWM1 : TIM1_OCMode_PWM2);
+  TIM3_OCMode_TypeDef lv_pwm3Type = (m_bPinReversed ? TIM3_OCMode_PWM1 : TIM3_OCMode_PWM2);
+  
   /* Time base configuration */
   TIM1_TimeBaseInit(7, TIM1_CounterMode_Up, TIM1_PERIOD, TIM1_REPTETION_COUNTER);
   //Õ¼¿Õ±È tim_plus/(peirod+1)
-  TIM1_OC1Init(TIM1_OCMode_PWM1, TIM1_OutputState_Enable, TIM1_OutputNState_Disable,
+  TIM1_OC1Init(lv_pwm1Type, TIM1_OutputState_Enable, TIM1_OutputNState_Disable,
                20, TIM1_OCPolarity_Low, TIM1_OCNPolarity_Low, TIM1_OCIdleState_Set,
                TIM1_OCNIdleState_Set);
   TIM1_OC1PreloadConfig(ENABLE);
 
-  TIM1_OC2Init(TIM1_OCMode_PWM1, TIM1_OutputState_Enable, TIM1_OutputNState_Disable,
+  TIM1_OC2Init(lv_pwm1Type, TIM1_OutputState_Enable, TIM1_OutputNState_Disable,
                20, TIM1_OCPolarity_Low, TIM1_OCNPolarity_Low, TIM1_OCIdleState_Set,
                TIM1_OCNIdleState_Set);
   TIM1_OC2PreloadConfig(ENABLE);
@@ -251,7 +255,7 @@ static void TIMPWMFunction_Config(void)
   TIM1_ARRPreloadConfig(ENABLE);
   
   TIM3_TimeBaseInit(TIM3_Prescaler_8, TIM3_CounterMode_Up,TIM3_PERIOD);
-  TIM3_OC2Init(TIM3_OCMode_PWM1, TIM3_OutputState_Enable, 200, TIM3_OCPolarity_Low,TIM3_OCIdleState_Set);
+  TIM3_OC2Init(lv_pwm3Type, TIM3_OutputState_Enable, 200, TIM3_OCPolarity_Low, TIM3_OCIdleState_Set);
   TIM3_OC2PreloadConfig(ENABLE);
   TIM3_ARRPreloadConfig(ENABLE);
 
@@ -267,8 +271,9 @@ static void TIMPWMFunction_Config(void)
   TIM3_Cmd(ENABLE);
 }
 
-void initTimPWMFunction (void)
+void initTimPWMFunction(const uint8_t _reversed)
 {
+  m_bPinReversed = _reversed;
   TIMLightPwm_ClkGpioConfig ();
   TIMPWMFunction_Config ();
 }

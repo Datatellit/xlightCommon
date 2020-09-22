@@ -21,7 +21,6 @@
 #ifndef MyMessage_h
 #define MyMessage_h
 
-
 #pragma data_alignment=1
 #define PLOAD_WIDTH                     32
 

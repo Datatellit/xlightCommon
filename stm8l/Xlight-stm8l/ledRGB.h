@@ -31,7 +31,7 @@ typedef struct FsmST2LED_s
 	eLightType type; 
 } FsmST2LED_t;
 
-void initTimPWMFunction (void);
+void initTimPWMFunction(const uint8_t _reversed);
 uint8_t led_GetIsOnIdleState(void);
 void led_SetIsOnIdleState(const uint8_t _on);
 
