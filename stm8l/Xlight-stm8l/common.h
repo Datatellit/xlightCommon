@@ -3,6 +3,7 @@
 
 #include "stm8l15x.h"
 #include "publicDefine.h"
+#include "xliSensorMap.h"
 
 #define WWDG_COUNTER                    0x7f
 #define WWDG_WINDOW                     0x77

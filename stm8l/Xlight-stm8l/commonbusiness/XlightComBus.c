@@ -11,9 +11,7 @@ void LoadConfig()
       if( IsConfigInvalid() ) {
         memset(&gConfig, 0x00, sizeof(gConfig));
         gConfig.version = XLA_VERSION;
-        gConfig.indDevice = 0;
         gConfig.present = 0;
-        gConfig.inPresentation = 0;
         gConfig.enSDTM = 0;
         gConfig.rptTimes = 1;
         gConfig.nodeID = XLA_PRODUCT_NODEID;

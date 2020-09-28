@@ -52,21 +52,6 @@
 
 typedef enum
 {
-  sensorDHT             = ((uint16_t)0x0001),
-  sensorALS             = ((uint16_t)0x0002),
-  sensorMIC             = ((uint16_t)0x0004),
-  sensorVIBRATION       = ((uint16_t)0x0008),
-  sensorPIR             = ((uint16_t)0x0010),
-  sensorSMOKE           = ((uint16_t)0x0020),
-  sensorGAS             = ((uint16_t)0x0040),
-  sensorDUST            = ((uint16_t)0x0080),
-  sensorLEAK            = ((uint16_t)0x0100),
-  sensorBEAT            = ((uint16_t)0x0200),
-  sensor_All            = ((uint8_t)0xFFFF)
-}sensors_bit_t;
-
-typedef enum
-{
   controlPIR            = ((uint16_t)0x0001),   // Use PIR to control device on / off
   controlALS            = ((uint16_t)0x0002),   // Use ALS threshold to control device on / off
   constALS              = ((uint16_t)0x0004),   // Constant brightness level

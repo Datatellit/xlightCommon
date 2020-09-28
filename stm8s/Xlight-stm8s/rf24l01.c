@@ -4,6 +4,14 @@
 #include <stm8s_spi.h>
 #include <stm8s_gpio.h>
 
+#define RF24100MW
+
+#ifdef RF24100MW
+#define SENDDELAYTIME  50      // 50 * 10um = 500um
+#else
+#define SENDDELAYTIME  2        // 2 * 10um = 20um
+#endif
+
 const UC RF24_BASE_RADIO_ID[ADDRESS_WIDTH] = {0x00,0x54,0x49,0x54,0x44};
 uint8_t rx_addr[ADDRESS_WIDTH];
 uint8_t tx_addr[ADDRESS_WIDTH];
@@ -336,6 +344,11 @@ void RF24L01_set_mode_TX(void) {
   config.MASK_RX_DR = 0;
   RF24L01_write_register(RF24L01_reg_CONFIG, ((uint8_t *)&config), 1);
   
+  // wait for Transmitter power-up (100 or 150um)
+  // 0xFF about 120us
+  uint16_t delay = 0xFF;
+  while(delay--);
+  
   // Restore the pipe0 adddress
   RF24L01_write_register(RF24L01_reg_RX_ADDR_P0, tx_addr, ADDRESS_WIDTH);
   RF24L01_write_register(RF24L01_reg_TX_ADDR, tx_addr, ADDRESS_WIDTH);  
@@ -399,6 +412,11 @@ void RF24L01_set_mode_RX(void) {
   RF24L01_send_command(RF24L01_command_FLUSH_TX);
   
   CE_HIGH; //CE -> High
+  
+  // wait for the radio to come up (130us actually only needed)
+  // 0xFF about 120us
+  uint16_t delay = 0xFF;
+  while(delay--);
 }
 
 int8_t RF24L01_set_mode_RX_timeout(void) {
@@ -508,9 +526,9 @@ void RF24L01_write_payload(uint8_t *data, uint8_t length) {
   
   //Generates an impulsion for CE to send the data
   CE_HIGH;
-  // 0xFF about 120us
-  uint16_t delay = 0xFF;
-  while(delay--);
+  // 25 about 10us
+  uint16_t delay = 25 * SENDDELAYTIME;
+  while(delay--);  
   CE_LOW;
 }
 
