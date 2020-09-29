@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm8l15x_tim2.c
   * @author  MCD Application Team
-  * @version V1.5.0
-  * @date    13-May-2011
+  * @version V1.6.1
+  * @date    30-September-2014
   * @brief   This file provides firmware functions to manage the following 
   *          functionalities of the TIM2 peripheral:
   *            - TimeBase management
@@ -19,7 +19,7 @@
   *          ===================================================================
   *                                 How to use this driver
   *          ===================================================================
-  *          This driver provides functions to configure and initialise the TIM2
+  *          This driver provides functions to configure and initialize the TIM2
   *          peripheral
   *          These functions are split in 7 groups: 
   *   
@@ -83,15 +83,21 @@
   ******************************************************************************
   * @attention
   *
-  * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
-  * WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE
-  * TIME. AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY
-  * DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING
-  * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
-  * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+  * <h2><center>&copy; COPYRIGHT 2014 STMicroelectronics</center></h2>
   *
-  * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
-  ******************************************************************************  
+  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  * You may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at:
+  *
+  *        http://www.st.com/software_license_agreement_liberty_v2
+  *
+  * Unless required by applicable law or agreed to in writing, software 
+  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  *
+  ******************************************************************************
   */
 
 /* Includes ------------------------------------------------------------------*/
@@ -761,7 +767,7 @@ void TIM2_BKRConfig(TIM2_OSSIState_TypeDef TIM2_OSSIState,
 
 
 
-  /* Set the Lock level, the Break enable Bit and the Ploarity, the OSSI State,
+  /* Set the Lock level, the Break enable Bit and the Polarity, the OSSI State,
   the dead time value and the Automatic Output Enable Bit */
   TIM2->BKR = (uint8_t)((uint8_t)((uint8_t)((uint8_t)((uint8_t)TIM2_OSSIState | (uint8_t)TIM2_LockLevel) | \
                                   (uint8_t)((uint8_t)TIM2_BreakState | (uint8_t)TIM2_BreakPolarity)) | \
@@ -1785,8 +1791,8 @@ void TIM2_ETRClockMode2Config(TIM2_ExtTRGPSC_TypeDef TIM2_ExtTRGPrescaler,
   *            @arg TIM2_TRGSelection_TIM2: TRIG Input source =  TIM TRIG Output
   *            @arg TIM2_TRGSelection_TIM2: TRIG Input source =  TIM TRIG Output
   *            @arg TIM2_TRGSelection_TI1F_ED: TRIG Input source = TI1F_ED (TI1 Edge Detector)
-  *            @arg TIM2_TRGSelection_TI1FP1: TRIG Input source = TI1FP1 (Filtred Timer Input 1)
-  *            @arg TIM2_TRGSelection_TI2FP2: TRIG Input source = TI2FP2 (Filtred Timer Input 2)
+  *            @arg TIM2_TRGSelection_TI1FP1: TRIG Input source = TI1FP1 (Filtered Timer Input 1)
+  *            @arg TIM2_TRGSelection_TI2FP2: TRIG Input source = TI2FP2 (Filtered Timer Input 2)
   *            @arg TIM2_TRGSelection_ETRF: TRIG Input source =  ETRF (External Trigger Input )      
   * @retval None
   */
@@ -2145,4 +2151,4 @@ static void TI2_Config(TIM2_ICPolarity_TypeDef TIM2_ICPolarity,
   * @}
   */
 
-/******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

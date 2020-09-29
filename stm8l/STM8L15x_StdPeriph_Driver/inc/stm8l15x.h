@@ -2,21 +2,27 @@
   ******************************************************************************
   * @file    stm8l15x.h
   * @author  MCD Application Team
-  * @version V1.5.0
-  * @date    13-May-2011
+  * @version V1.6.1
+  * @date    30-September-2014
   * @brief   This file contains all the peripheral register's definitions, bits
   *          definitions and memory mapping for STM8L15x devices.
   ******************************************************************************
   * @attention
   *
-  * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
-  * WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE
-  * TIME. AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY
-  * DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING
-  * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
-  * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+  * <h2><center>&copy; COPYRIGHT 2014 STMicroelectronics</center></h2>
   *
-  * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
+  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  * You may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at:
+  *
+  *        http://www.st.com/software_license_agreement_liberty_v2
+  *
+  * Unless required by applicable law or agreed to in writing, software 
+  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  *
   ******************************************************************************  
   */
 
@@ -33,7 +39,12 @@
 /* #define STM8L15X_LD */     /*!< STM8L15X_LD: STM8L15x Low density devices */
 /* #define STM8L15X_MD */     /*!< STM8L15X_MD: STM8L15x Medium density devices */
 /* #define STM8L15X_MDP */    /*!< STM8L15X_MDP: STM8L15x Medium density plus devices */
-/* #define STM8L15X_HD */    /*!< STM8L15X_HD: STM8L15x/16x High density devices */
+/* #define STM8L15X_HD */     /*!< STM8L15X_HD: STM8L15x/16x High density devices */
+/* #define STM8L05X_LD_VL */  /*!< STM8L05X_LD_VL: STM8L051xx3 Low density value line devices */
+/* #define STM8L05X_MD_VL */  /*!< STM8L05X_MD_VL: STM8L052xx6 Medium density value line devices */
+/* #define STM8L05X_HD_VL */  /*!< STM8L05X_HD_VL: STM8L052xx8 High density value line devices */
+/* #define STM8AL31_L_MD */   /*!< STM8AL31_L_MD: STM8AL3x Medium density devices */
+
 
 /*  Tip: To avoid modifying this file each time you need to switch between these
         devices, you can define the device in your toolchain compiler preprocessor.
@@ -51,10 +62,19 @@
  - High density STM8L15x devices are STM8L151x8, STM8L152x8, STM8L162R8 and STM8L162M8
    microcontrollers where the Flash memory density is fixed and equal to 64 Kbytes with 
    the same peripheral set than Medium Density Plus devices.
-
+ - Value line low density STM8L05xx devices are STM8L051x3 microcontrollers
+   with 8-KB Flash
+ - Value line medium density STM8L05xx devices are STM8L052x6 microcontrollers 
+   with 32-KB Flash
+ - Value line high density STM8L05xx devices: STM8L052x8 microcontrollers
+   with 64-KB Flash
+ - Medium density STM8AL31xx/STM8AL3Lxx devices: STM8AL3168, STM8AL3166, 
+   STM8AL3148,STM8AL3146, STM8AL3138, STM8AL3136, STM8AL3L68, STM8AL3L66, 
+   STM8AL3L48, STM8AL3L46 microcontrollers with 8-KB, 16-KB or 32-KB Flash
  */
 
-#if !defined (STM8L15X_MD) && !defined (STM8L15X_MDP) && !defined (STM8L15X_HD) && !defined (STM8L15X_LD)
+#if !defined (STM8L15X_MD) && !defined (STM8L15X_MDP) && !defined (STM8L15X_HD) && !defined (STM8L15X_LD) \
+&& !defined (STM8L05X_LD_VL) && !defined (STM8L05X_MD_VL) && !defined (STM8L05X_HD_VL) && !defined (STM8AL31_L_MD)
  #error "Please select first the target STM8L device used in your application (in stm8l15x.h file)"
 #endif
 
@@ -64,7 +84,7 @@
 /* Check the used compiler */
 #if defined(__CSMC__)
  #define _COSMIC_
-#elif defined(__RCST7__)
+#elif defined(__RCSTM8__)
  #define _RAISONANCE_
 #elif defined(__ICCSTM8__)
  #define _IAR_
@@ -86,20 +106,26 @@
    Tip: To avoid modifying this file each time you need to use different HSE, you
         can define the HSE value in your toolchain compiler preprocessor.
   */
-#if !defined  HSE_Value
+#if !defined  HSE_VALUE
  #define HSE_VALUE   ((uint32_t)16000000) /*!< Typical Value of the HSE in Hz */
-#endif /* HSE_Value */
+#endif /* HSE_VALUE */
 
 /**
   * @brief Definition of External Low Speed oscillator (LSE) frequency
   */
-#define LSE_VALUE   ((uint32_t)32768)   /*!< Typical Value of the LSE in Hz */
-
+#if !defined  LSE_VALUE
+ #define LSE_VALUE   ((uint32_t)32768)   /*!< Typical Value of the LSE in Hz */
+#endif /* LSE_VALUE */
 /**
   * @brief Definition of Device on-chip RC oscillator frequencies
   */
-#define HSI_VALUE   ((uint32_t)16000000) /*!< Typical Value of the HSI in Hz */
-#define LSI_VALUE   ((uint32_t)38000)    /*!< Typical Value of the LSI in Hz */
+#if !defined  HSI_VALUE 
+ #define HSI_VALUE   ((uint32_t)16000000) /*!< Typical Value of the HSI in Hz */
+#endif /* HSI_VALUE */
+
+#if !defined  LSI_VALUE
+ #define LSI_VALUE   ((uint32_t)38000)    /*!< Typical Value of the LSI in Hz */
+#endif /* LSI_VALUE */
 
 #ifdef _COSMIC_
  #define FAR  @far
@@ -107,19 +133,20 @@
  #define TINY @tiny
  #define EEPROM @eeprom
  #define CONST  const
-#elif defined (_RAISONANCE_) /* __RCST7__ */
+#elif defined (_RAISONANCE_) /* __RCSTM8__ */
  #define FAR  far
  #define NEAR data
  #define TINY page0
  #define EEPROM eeprom
  #define CONST  code
- #if defined (STM8L15X_MD) || defined (STM8L15X_MDP)
+ #if defined (STM8L15X_MD) || defined (STM8L15X_MDP) || defined (STM8L05X_MD_VL) || \
+ defined (STM8AL31_L_MD)
   /*!< Used with memory Models for code less than 64K */
   #define MEMCPY memcpy
- #else /* STM8L15X_HD */
+ #elif defined (STM8L15X_HD) || defined (STM8L05X_HD_VL)
    /*!< Used with memory Models for code higher than 64K */
   #define MEMCPY fmemcpy
- #endif /* STM8L15X_MD or STM8L15X_MDP */ 
+ #endif /* STM8L15X_MD or STM8L15X_MDP or STM8L05X_MD_VL or STM8AL31_L_MD*/ 
 #else /*_IAR_*/
  #define FAR  __far
  #define NEAR __near
@@ -133,13 +160,17 @@
   */
 #define __CONST  CONST
 
-#if defined (STM8L15X_MD) || defined (STM8L15X_MDP) || defined (STM8L15X_LD) 
+#if defined (STM8L15X_MD) || defined (STM8L15X_MDP) || defined (STM8L15X_LD) || \
+defined (STM8L05X_LD_VL) || defined (STM8L05X_MD_VL) || defined (STM8AL31_L_MD)
 /*!< Used with memory Models for code smaller than 64K */
  #define PointerAttr NEAR
-#else /* STM8L15X_HD */
+ #define MemoryAddressCast uint16_t
+#elif defined (STM8L15X_HD) || defined (STM8L05X_HD_VL)
 /*!< Used with memory Models for code higher than 64K */
  #define PointerAttr FAR
-#endif /* STM8L15X_MD or STM8L15X_MDP or STM8L15X_LD*/
+ #define MemoryAddressCast uint32_t
+#endif /* STM8L15X_MD or STM8L15X_MDP or STM8L15X_LD or STM8L05X_LD_VL or STM8L05X_MD_VL
+          or STM8AL31_L_MD */
 
 /* Uncomment the line below to enable the FLASH functions execution from RAM */
 #if !defined (RAM_EXECUTION)
@@ -149,7 +180,7 @@
 #ifdef RAM_EXECUTION
  #ifdef _COSMIC_
    #define IN_RAM(a) a
- #elif defined (_RAISONANCE_) /* __RCST7__ */
+ #elif defined (_RAISONANCE_) /* __RCSTM8__ */
    #define IN_RAM(a) a inram
  #else /*_IAR_*/
   #define IN_RAM(a) __ramfunc a
@@ -160,8 +191,8 @@
 
 /*!< [31:16] STM8L15X Standard Peripheral Library main version */
 #define __STM8L15X_STDPERIPH_VERSION_MAIN   ((uint8_t)0x01) /*!< [31:24] main version */                                  
-#define __STM8L15X_STDPERIPH_VERSION_SUB1   ((uint8_t)0x05) /*!< [23:16] sub1 version */
-#define __STM8L15X_STDPERIPH_VERSION_SUB2   ((uint8_t)0x00) /*!< [15:8]  sub2 version */
+#define __STM8L15X_STDPERIPH_VERSION_SUB1   ((uint8_t)0x06) /*!< [23:16] sub1 version */
+#define __STM8L15X_STDPERIPH_VERSION_SUB2   ((uint8_t)0x01) /*!< [15:8]  sub2 version */
 #define __STM8L15X_STDPERIPH_VERSION_RC     ((uint8_t)0x00) /*!< [7:0]  release candidate */ 
 #define __STM8L15X_STDPERIPH_VERSION       ( (__STM8L15X_STDPERIPH_VERSION_MAIN << 24)\
                                           |(__STM8L15X_STDPERIPH_VERSION_SUB1 << 16)\
@@ -2943,7 +2974,7 @@ Comments :    The different parameters of commands are
               The "MskBit" command allows to select some bits in a source
               variables and copy it in a destination var (return the value).
               The "ValBit" command returns the value of a bit in a char
-              variable: the bit is reseted if it returns 0 else the bit is set.
+              variable: the bit is reset if it returns 0 else the bit is set.
               This method generates not an optimised code yet.
 -----------------------------------------------------------------------------*/
 #define SetBit(VAR,Place)         ( (VAR) |= (uint8_t)((uint8_t)1<<(uint8_t)(Place)) )
@@ -2993,4 +3024,4 @@ Comments :    The idea is to handle directly with the bit name. For that, it is
   * @}
   */
 
-/******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

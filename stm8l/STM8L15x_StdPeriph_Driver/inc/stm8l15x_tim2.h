@@ -2,21 +2,27 @@
   ******************************************************************************
   * @file    stm8l15x_tim2.h
   * @author  MCD Application Team
-  * @version V1.5.0
-  * @date    13-May-2011
+  * @version V1.6.1
+  * @date    30-September-2014
   * @brief   This file contains all the functions prototypes for the TIM2 firmware
   *          library.
   ******************************************************************************
   * @attention
   *
-  * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
-  * WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE
-  * TIME. AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY
-  * DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING
-  * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
-  * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+  * <h2><center>&copy; COPYRIGHT 2014 STMicroelectronics</center></h2>
   *
-  * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
+  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  * You may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at:
+  *
+  *        http://www.st.com/software_license_agreement_liberty_v2
+  *
+  * Unless required by applicable law or agreed to in writing, software 
+  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  *
   ******************************************************************************  
   */
 
@@ -325,8 +331,8 @@ typedef enum
   TIM2_TRGSelection_TIM3     = ((uint8_t)0x20),  /*!< TRIG Input source =  TIM TRIG Output  */
   TIM2_TRGSelection_TIM5     = ((uint8_t)0x30),  /*!< TRIG Input source =  TIM TRIG Output  */
   TIM2_TRGSelection_TI1F_ED  = ((uint8_t)0x40),  /*!< TRIG Input source = TI1F_ED (TI1 Edge Detector)  */
-  TIM2_TRGSelection_TI1FP1   = ((uint8_t)0x50),  /*!< TRIG Input source = TI1FP1 (Filtred Timer Input 1) */
-  TIM2_TRGSelection_TI2FP2   = ((uint8_t)0x60),  /*!< TRIG Input source = TI2FP2 (Filtred Timer Input 2)  */
+  TIM2_TRGSelection_TI1FP1   = ((uint8_t)0x50),  /*!< TRIG Input source = TI1FP1 (Filtered Timer Input 1) */
+  TIM2_TRGSelection_TI2FP2   = ((uint8_t)0x60),  /*!< TRIG Input source = TI2FP2 (Filtered Timer Input 2)  */
   TIM2_TRGSelection_ETRF     = ((uint8_t)0x70)   /*!< TRIG Input source =  ETRF (External Trigger Input ) */
 }TIM2_TRGSelection_TypeDef;
 
@@ -896,4 +902,4 @@ void TIM2_SelectHallSensor(FunctionalState NewState);
   * @}
   */
 
-/******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

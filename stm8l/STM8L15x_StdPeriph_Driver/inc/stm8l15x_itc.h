@@ -2,27 +2,33 @@
   ******************************************************************************
   * @file    stm8l15x_itc.h
   * @author  MCD Application Team
-  * @version V1.5.0
-  * @date    13-May-2011
+  * @version V1.6.1
+  * @date    30-September-2014
   * @brief   This file contains all the functions prototypes for the ITC firmware
   *          library.
   ******************************************************************************
   * @attention
   *
-  * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
-  * WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE
-  * TIME. AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY
-  * DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING
-  * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
-  * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+  * <h2><center>&copy; COPYRIGHT 2014 STMicroelectronics</center></h2>
   *
-  * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
+  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  * You may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at:
+  *
+  *        http://www.st.com/software_license_agreement_liberty_v2
+  *
+  * Unless required by applicable law or agreed to in writing, software 
+  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  *
   ******************************************************************************  
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __STM8L15x_ITC_H__
-#define __STM8L15x_ITC_H__
+#ifndef __STM8L15x_ITC_H
+#define __STM8L15x_ITC_H
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm8l15x.h"
@@ -59,7 +65,7 @@ typedef enum {
   ADC1_COMP_IRQn                           = (uint8_t)18,  /*!< ADC1/Comparator interrupt */
   TIM4_UPD_OVF_TRG_IRQn                    = (uint8_t)25,  /*!< TIM4 Update/Overflow/Trigger interrupt */
   SPI1_IRQn                                = (uint8_t)26,  /*!< SPI1 interrupt */
-#if defined (STM8L15X_MD)
+#if defined (STM8L15X_MD) || defined (STM8L05X_MD_VL) || defined (STM8AL31_L_MD)
   RTC_IRQn                                 = (uint8_t)4,   /*!< RTC interrupt    */
   EXTIB_IRQn                               = (uint8_t)6,   /*!< GPIOB interrupt  */
   EXTID_IRQn                               = (uint8_t)7,   /*!< GPIOD interrupt  */
@@ -74,7 +80,7 @@ typedef enum {
   USART1_TX_IRQn                           = (uint8_t)27,  /*!< USART1 TX interrupt */
   USART1_RX_IRQn                           = (uint8_t)28,  /*!< USART1 RX interrupt */
   I2C1_IRQn                                = (uint8_t)29   /*!< I2C1 interrupt */
-#elif defined (STM8L15X_LD)
+#elif defined (STM8L15X_LD) || defined (STM8L05X_LD_VL)
   RTC_CSSLSE_IRQn                          = (uint8_t)4,   /*!< RTC / CSSLSE interrupt    */
   EXTIB_IRQn                               = (uint8_t)6,   /*!< GPIOB interrupt  */
   EXTID_IRQn                               = (uint8_t)7,   /*!< GPIOD interrupt  */
@@ -86,7 +92,7 @@ typedef enum {
   USART1_TX_IRQn                           = (uint8_t)27,  /*!< USART1 TX interrupt */
   USART1_RX_IRQn                           = (uint8_t)28,  /*!< USART1 RX interrupt */
   I2C1_IRQn                                = (uint8_t)29   /*!< I2C1 interrupt */
-#elif defined (STM8L15X_HD) || defined (STM8L15X_MDP)
+#elif defined (STM8L15X_HD) || defined (STM8L15X_MDP) || defined (STM8L05X_HD_VL)
   RTC_CSSLSE_IRQn                          = (uint8_t)4,   /*!< RTC / CSSLSE interrupt    */
   EXTIB_G_IRQn                             = (uint8_t)6,   /*!< GPIOB / G interrupt  */
   EXTID_H_IRQn                             = (uint8_t)7,   /*!< GPIOD / H interrupt  */
@@ -104,8 +110,8 @@ typedef enum {
 #endif  /* STM8L15X_MD */
 }IRQn_TypeDef;
 
-#ifdef STM8L15X_MD
-#define IS_ITC_IRQ(Irq) (((Irq) == FLASH_IRQn) || \
+#if defined (STM8L15X_MD) || defined (STM8L05X_MD_VL) || defined (STM8AL31_L_MD)
+ #define IS_ITC_IRQ(Irq) (((Irq) == FLASH_IRQn) || \
                          ((Irq) == DMA1_CHANNEL0_1_IRQn) || \
                          ((Irq) == DMA1_CHANNEL2_3_IRQn) || \
                          ((Irq) == RTC_IRQn) || \
@@ -134,8 +140,8 @@ typedef enum {
                          ((Irq) == USART1_TX_IRQn) || \
                          ((Irq) == USART1_RX_IRQn) || \
                          ((Irq) == I2C1_IRQn))
-#elif defined (STM8L15X_LD)
-#define IS_ITC_IRQ(Irq) (((Irq) == FLASH_IRQn) || \
+#elif defined (STM8L15X_LD) || defined (STM8L05X_LD_VL)
+ #define IS_ITC_IRQ(Irq) (((Irq) == FLASH_IRQn) || \
                          ((Irq) == DMA1_CHANNEL0_1_IRQn) || \
                          ((Irq) == DMA1_CHANNEL2_3_IRQn) || \
                          ((Irq) == RTC_CSSLSE_IRQn) || \
@@ -161,8 +167,8 @@ typedef enum {
                          ((Irq) == USART1_TX_IRQn) || \
                          ((Irq) == USART1_RX_IRQn) || \
                          ((Irq) == I2C1_IRQn))												 
-#elif defined (STM8L15X_HD) || defined (STM8L15X_MDP)
-#define IS_ITC_IRQ(Irq) (((Irq) == FLASH_IRQn) || \
+#elif defined (STM8L15X_HD) || defined (STM8L15X_MDP) || defined (STM8L05X_HD_VL)
+ #define IS_ITC_IRQ(Irq) (((Irq) == FLASH_IRQn) || \
                          ((Irq) == DMA1_CHANNEL0_1_IRQn) || \
                          ((Irq) == DMA1_CHANNEL2_3_IRQn) || \
                          ((Irq) == RTC_CSSLSE_IRQn) || \
@@ -253,7 +259,7 @@ uint8_t ITC_GetSoftIntStatus(void);
 void ITC_SetSoftwarePriority(IRQn_TypeDef IRQn, ITC_PriorityLevel_TypeDef ITC_PriorityLevel);
 ITC_PriorityLevel_TypeDef ITC_GetSoftwarePriority(IRQn_TypeDef IRQn);
 
-#endif /* __STM8L15x_ITC_H__ */
+#endif /* __STM8L15x_ITC_H */
 
 /**
   * @}
@@ -263,4 +269,4 @@ ITC_PriorityLevel_TypeDef ITC_GetSoftwarePriority(IRQn_TypeDef IRQn);
   * @}
   */
   
-/******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

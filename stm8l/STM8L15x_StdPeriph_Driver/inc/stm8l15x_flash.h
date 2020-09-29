@@ -2,27 +2,33 @@
   ******************************************************************************
   * @file    stm8l15x_flash.h
   * @author  MCD Application Team
-  * @version V1.5.0
-  * @date    13-May-2011
+  * @version V1.6.1
+  * @date    30-September-2014
   * @brief   This file contains all the functions prototypes for the FLASH firmware
   *          library.
   ******************************************************************************
   * @attention
   *
-  * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
-  * WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE
-  * TIME. AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY
-  * DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING
-  * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
-  * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+  * <h2><center>&copy; COPYRIGHT 2014 STMicroelectronics</center></h2>
   *
-  * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
+  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  * You may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at:
+  *
+  *        http://www.st.com/software_license_agreement_liberty_v2
+  *
+  * Unless required by applicable law or agreed to in writing, software 
+  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  *
   ******************************************************************************  
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __STM8L15x_FLASH_H__
-#define __STM8L15x_FLASH_H__
+#ifndef __STM8L15x_FLASH_H
+#define __STM8L15x_FLASH_H
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm8l15x.h"
@@ -44,7 +50,7 @@
 #define FLASH_DATA_EEPROM_START_PHYSICAL_ADDRESS   ((uint32_t)0x00001000) /*!< Data Eeprom: start address */
 
 /* STM8L15x High density devices */
-#ifdef STM8L15X_HD
+#if defined (STM8L15X_HD) || defined (STM8L05X_HD_VL) 
  #define FLASH_PROGRAM_END_PHYSICAL_ADDRESS         ((uint32_t)0x00017FFF) /*!< Flash: end address */
  #define FLASH_DATA_EEPROM_END_PHYSICAL_ADDRESS     ((uint32_t)0x000017FF) /*!< Data Eeprom: end address */
  #define FLASH_PROGRAM_BLOCKS_NUMBER                ((uint16_t)0x200)      /*!< Flash memory: total number of Block */
@@ -53,7 +59,7 @@
                                                                               (common for Program and Data EEprom memories) */
  
 /* STM8L15x Medium density and Medium density plus devices */ 
-#elif defined (STM8L15X_MD) || defined (STM8L15X_MDP)
+#elif defined (STM8L15X_MD) || defined (STM8L15X_MDP) || defined (STM8AL31_L_MD) || defined (STM8L05X_MD_VL)
  #define FLASH_PROGRAM_END_PHYSICAL_ADDRESS         ((uint32_t)0x0000FFFF) /*!< Flash: end address */
  #define FLASH_DATA_EEPROM_END_PHYSICAL_ADDRESS     ((uint32_t)0x000013FF) /*!< Data Eeprom: end address */
  #define FLASH_PROGRAM_BLOCKS_NUMBER                ((uint16_t)0x100)      /*!< Flash memory: total number of Block */
@@ -62,14 +68,14 @@
                                                                               (common for Program and Data EEprom memories) */
 
 /* STM8L15x Low density devices */ 
-#elif defined (STM8L15X_LD)
+#elif defined (STM8L15X_LD) || defined (STM8L05X_LD_VL)
  #define FLASH_PROGRAM_END_PHYSICAL_ADDRESS         ((uint32_t)0x00009FFF) /*!< Flash: end address */
  #define FLASH_DATA_EEPROM_END_PHYSICAL_ADDRESS     ((uint32_t)0x000010FF) /*!< Data Eeprom: end address */
  #define FLASH_PROGRAM_BLOCKS_NUMBER                ((uint16_t)0x80)       /*!< Flash memory: total number of Block */
  #define FLASH_DATA_EEPROM_BLOCKS_NUMBER            ((uint8_t)0x4)         /*!< Data EEprom: total number of Block */
  #define FLASH_BLOCK_SIZE                           ((uint8_t)0x40)        /*!< Number of bytes in a Block 
                                                                               (common for Program and Data EEprom memories) */
-#endif /* STM8L15X_HD */
+#endif /* STM8L15X_HD or STM8L05X_HD_VL*/
 
 /*Common defines for all STM8L15x devices */
 #define FLASH_OPTION_BYTES_START_PHYSICAL_ADDRESS  ((uint32_t)0x00004800) /*!< Option bytes: start address */
@@ -340,7 +346,7 @@ IN_RAM(void FLASH_EraseBlock(uint16_t BlockNum, FLASH_MemType_TypeDef FLASH_MemT
 
 IN_RAM(FLASH_Status_TypeDef FLASH_WaitForLastOperation(FLASH_MemType_TypeDef FLASH_MemType));
 
-#endif /*__STM8L15x_FLASH_H__*/
+#endif /*__STM8L15x_FLASH_H*/
 
 /**
   * @}
@@ -350,4 +356,4 @@ IN_RAM(FLASH_Status_TypeDef FLASH_WaitForLastOperation(FLASH_MemType_TypeDef FLA
   * @}
   */
 
-/******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

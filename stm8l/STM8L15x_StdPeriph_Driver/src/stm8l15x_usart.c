@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm8l15x_usart.c
   * @author  MCD Application Team
-  * @version V1.5.0
-  * @date    13-May-2011
+  * @version V1.6.1
+  * @date    30-September-2014
   * @brief   This file provides firmware functions to manage the following 
   *          functionalities of the Universal synchronous asynchronous receiver
   *          transmitter (USART):           
@@ -53,15 +53,21 @@
   ******************************************************************************
   * @attention
   *
-  * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
-  * WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE
-  * TIME. AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY
-  * DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING
-  * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
-  * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+  * <h2><center>&copy; COPYRIGHT 2014 STMicroelectronics</center></h2>
   *
-  * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
-  ******************************************************************************  
+  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  * You may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at:
+  *
+  *        http://www.st.com/software_license_agreement_liberty_v2
+  *
+  * Unless required by applicable law or agreed to in writing, software 
+  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  *
+  ******************************************************************************
   */ 
 
 /* Includes ------------------------------------------------------------------*/
@@ -1158,7 +1164,6 @@ ITStatus USART_GetITStatus(USART_TypeDef* USARTx, USART_IT_TypeDef USART_IT)
   * @param  USARTx: where x can be 1 to select the specified USART peripheral.
   * @param  USART_IT: specifies the interrupt pending bit to clear.
   *         This parameter can be one of the following values:
-  *            @arg USART_IT_RXNE: Receive Data register not empty interrupt.
   *            @arg USART_IT_TC: Transmission complete interrupt.
   * @note   PE (Parity error), FE (Framing error), NE (Noise error),
   *         OR (OverRun error) and IDLE (Idle line detected) pending bits are
@@ -1177,12 +1182,10 @@ ITStatus USART_GetITStatus(USART_TypeDef* USARTx, USART_IT_TypeDef USART_IT)
   */
 void USART_ClearITPendingBit(USART_TypeDef* USARTx, USART_IT_TypeDef USART_IT)
 {
-  uint8_t bitpos = 0x00, itmask = 0x00;
   assert_param(IS_USART_CLEAR_IT(USART_IT));
-  bitpos = (uint8_t)( (uint8_t)((uint8_t)USART_IT & (uint8_t)0xF0) >> 0x04);
-  itmask = (uint8_t)( (uint8_t)0x01 << bitpos);
+
   /*< Clear RXNE or TC pending bit */
-  USARTx->SR = (uint8_t)~itmask;
+  USARTx->SR &= (uint8_t)(~USART_SR_TC);
 }
 
 
@@ -1202,4 +1205,4 @@ void USART_ClearITPendingBit(USART_TypeDef* USARTx, USART_IT_TypeDef USART_IT)
   * @}
   */
 
-/******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
