@@ -75,12 +75,13 @@ void RF24L01_DeInit(void) {
   CE_LOW;
   CSN_LOW;
   SPI_Cmd(SPI1, DISABLE);
-
+  // CE, SCK, MOSI
   GPIO_Init(GPIOB, GPIO_Pin_4|GPIO_Pin_5|GPIO_Pin_6, GPIO_Mode_Out_PP_Low_Slow);
+  // MISO
   GPIO_Init(GPIOB, GPIO_Pin_7, GPIO_Mode_In_FL_No_IT);
-  
+  // CSN
   GPIO_Init(GPIOC, GPIO_Pin_6, GPIO_Mode_Out_PP_Low_Slow);
-  
+  // IRQ
   GPIO_Init(GPIOD, GPIO_Pin_5, GPIO_Mode_In_FL_No_IT);
   enableInterrupts();
 }
