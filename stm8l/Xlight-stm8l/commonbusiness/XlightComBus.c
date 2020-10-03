@@ -1,6 +1,16 @@
 #include "_global.h"
 #include "rf24l01.h"
 #include "MyMessage.h"
+
+bool gNeedSaveBackup = FALSE;
+bool gIsStatusChanged = FALSE;
+bool gIsConfigChanged = FALSE;
+bool gResetRF = FALSE;
+bool gResetNode = FALSE;
+bool gResendPresentation = FALSE;
+
+uint8_t _uniqueID[UNIQUE_ID_LEN];
+
 // Load config from Flash
 void LoadConfig()
 {
@@ -36,4 +46,49 @@ void LoadConfig()
     {
       memcpy(&gConfig,pData,nLen);
     }
+}
+
+// Save config to Flash
+void SaveBackupConfig()
+{
+  if( gNeedSaveBackup ) {
+    // Overwrite entire config FLASH
+    if(Flash_WriteDataBlock(BACKUP_CONFIG_BLOCK_NUM, (uint8_t *)&gConfig, sizeof(gConfig))) {
+      gNeedSaveBackup = FALSE;
+    }
+  }
+}
+
+// Save status to Flash
+void SaveStatusData()
+{
+  if( gIsStatusChanged ) {
+    // Skip the first byte (version)
+    uint8_t pData[50] = {0};
+    uint16_t nLen = (uint16_t)(&(gConfig.nodeID)) - (uint16_t)(&gConfig);
+    memcpy(pData, (uint8_t *)&gConfig, nLen);
+    if(Flash_WriteDataBlock(STATUS_DATA_NUM, pData, nLen)) {
+      gIsStatusChanged = FALSE;
+    }
+  }
+}
+
+// Save config to Flash
+void SaveConfig()
+{
+  if( gIsConfigChanged ) {
+    // Ensure Status has another chance to be saved even if Saving Config failed
+    gIsStatusChanged = TRUE;
+    // Overwrite entire config FLASH 
+    uint8_t Attmpts = 0;
+    while(++Attmpts <= 3) {
+      if(Flash_WriteDataBlock(0, (uint8_t *)&gConfig, sizeof(gConfig))) {
+        gIsStatusChanged = FALSE;
+        gIsConfigChanged = FALSE;
+        gNeedSaveBackup = TRUE;
+        break;
+      }
+    }
+  }
+  SaveStatusData();
 }

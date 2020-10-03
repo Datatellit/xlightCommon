@@ -6,6 +6,8 @@
 #define RF_RCV_MQ_LEN           3
 
 void build(uint8_t _destination, uint8_t _sensor, uint8_t _command, uint8_t _type, bool _enableAck, bool _isAck);
+void UpdateNodeAddress(const uint8_t _tx);
+bool NeedUpdateRFAddress(const uint8_t _dest);
 
 void MsgScanner_ProbeAck(uint8_t _to);
 uint8_t ParseCommonProtocol();

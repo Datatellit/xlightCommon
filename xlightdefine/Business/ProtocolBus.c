@@ -21,12 +21,41 @@ void build(uint8_t _destination, uint8_t _sensor, uint8_t _command, uint8_t _typ
     moSetAck(_isAck);
 }
 
+bool isNodeIdRequired()
+{
+  return( isIdentityEmpty(gConfig.NetworkID, ADDRESS_WIDTH) || isIdentityEqual(gConfig.NetworkID, RF24_BASE_RADIO_ID, ADDRESS_WIDTH) );
+}
+
+void UpdateNodeAddress(const uint8_t _tx) {
+  memcpy(rx_addr, gConfig.NetworkID, ADDRESS_WIDTH);
+  rx_addr[0] = gConfig.nodeID;
+  memcpy(tx_addr, gConfig.NetworkID, ADDRESS_WIDTH);
+  if( _tx == NODEID_RF_SCANNER ) {
+    tx_addr[0] = NODEID_RF_SCANNER;
+  } else {
+    //tx_addr[0] = (isNodeIdRequired() ? BASESERVICE_ADDRESS : NODEID_GATEWAY);
+    tx_addr[0] = NODEID_GATEWAY;
+  }
+  RF24L01_setup(gConfig.rfChannel, gConfig.rfDataRate, gConfig.rfPowerLevel, BROADCAST_ADDRESS);
+}
+
+bool NeedUpdateRFAddress(const uint8_t _dest) {
+  bool rc = TRUE;
+  if( _dest == NODEID_RF_SCANNER && tx_addr[0] != NODEID_RF_SCANNER ) {
+    UpdateNodeAddress(NODEID_RF_SCANNER);
+  } else if( _dest != NODEID_RF_SCANNER && tx_addr[0] != NODEID_GATEWAY ) {
+    UpdateNodeAddress(NODEID_GATEWAY);
+  } else rc = FALSE;
+  return rc;
+}
+
 typedef struct
 {
   uint8_t offset;
   uint8_t size;
   uint8_t byUniqueid;  // whether getconfig by uniqueid
-}CfgBlock;
+} CfgBlock;
+
 #define OUT_CFG_MESSAGE_LEN           16
 CfgBlock out_cfg_msg_buf[OUT_CFG_MESSAGE_LEN];
 u8 cfg_msg_out_buf_read_ptr = 0;

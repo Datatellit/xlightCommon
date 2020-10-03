@@ -2,5 +2,17 @@
 #define _XLIGHTCOMBUS_DEV_H_
 
 void LoadConfig();
+void SaveBackupConfig();
+void SaveStatusData();
+void SaveConfig();
+
+extern bool gIsConfigChanged;
+extern bool gNeedSaveBackup;
+extern bool gIsStatusChanged;
+extern bool gResetRF;
+extern bool gResetNode;
+extern bool gResendPresentation;
+
+extern uint8_t _uniqueID[UNIQUE_ID_LEN];
 
 #endif
