@@ -50,7 +50,7 @@ void wwdg_init() {
 
 // Feed the Window Watchdog
 void feed_wwdg(void) {
-#ifndef DEBUG_NO_WWDG    
+#ifndef DEBUG_NO_WWDG
   uint8_t cntValue = WWDG_GetCounter() & WWDG_COUNTER;
   if( cntValue < WWDG_WINDOW ) {
     WWDG_SetCounter(WWDG_COUNTER);
