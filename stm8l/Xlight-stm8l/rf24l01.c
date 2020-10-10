@@ -189,7 +189,7 @@ void RF24L01_setup(uint8_t channel, uint8_t datarate, uint8_t powerlevel, uint8_
   // Set boardcast address
   if( boardcast > 0 ) {
     uint8_t bc_addr[5];
-    memcpy(bc_addr, rx_addr, 5);
+    copyBuffer(bc_addr, rx_addr, 5);
     bc_addr[0] = boardcast;
     RF24L01_write_register(RF24L01_reg_RX_ADDR_P1, bc_addr, 5);
   }
@@ -439,7 +439,7 @@ void print_byte_register(const char* name, uint8_t reg)
   uint8_t value;
 
   value = RF24L01_read_register(reg);
-  memset(strOutput, 0x00, sizeof(strOutput));
+  clearBuffer(strOutput, sizeof(strOutput));
   sprintf(strOutput, "%s=0x%x\n\r", name, value);
   Uart2SendString(strOutput);
 }
@@ -482,7 +482,7 @@ void RF24L01_show_registers(void) {*/
   nSetup = RF24L01_read_register(RF24L01_reg_RF_SETUP);
   n1D = RF24L01_read_register(RF24L01_reg_DYNPD);
   n1C = RF24L01_read_register(RF24L01_reg_FEATURE);
-  memset(strOutput, 0x00, sizeof(strOutput));
+  clearBuffer(strOutput, sizeof(strOutput));
   sprintf(strOutput, "State=%02x, AA=%02x, RXADDR=%02x, Config=%02x, CH=%02x, Setup=%02x, Fea=%02x, Dyn=%02x\n\r", nState, nAA, nRXADDR, nConfig, nRFCH, nSetup, n1C, n1D);
   Uart2SendString(strOutput);
 }

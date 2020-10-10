@@ -27,9 +27,9 @@ bool isNodeIdRequired()
 }
 
 void UpdateNodeAddress(const uint8_t _tx) {
-  memcpy(rx_addr, gConfig.NetworkID, ADDRESS_WIDTH);
+  copyBuffer(rx_addr, gConfig.NetworkID, ADDRESS_WIDTH);
   rx_addr[0] = gConfig.nodeID;
-  memcpy(tx_addr, gConfig.NetworkID, ADDRESS_WIDTH);
+  copyBuffer(tx_addr, gConfig.NetworkID, ADDRESS_WIDTH);
   if( _tx == NODEID_RF_SCANNER ) {
     tx_addr[0] = NODEID_RF_SCANNER;
   } else {
@@ -90,10 +90,10 @@ bool SendCfgBlock(uint8_t offset,uint8_t size,uint8_t isNeedUniqueid) {
     uint8_t custom_playload = 2;
     if(isNeedUniqueid != 0) 
     {
-      memcpy(sndMsg.payload.data + 2,_uniqueID, UNIQUE_ID_LEN);
+      copyBuffer(sndMsg.payload.data + 2, _uniqueID, UNIQUE_ID_LEN);
       custom_playload += UNIQUE_ID_LEN;
     }  
-    memcpy(sndMsg.payload.data + custom_playload, (void *)((uint16_t)(&gConfig) + offset), size);
+    copyBuffer(sndMsg.payload.data + custom_playload, (UC *)((uint16_t)(&gConfig) + offset), size);
     moSetLength(size+custom_playload);
     moSetPayloadType(P_CUSTOM);
     bMsgReady = 1;
@@ -111,7 +111,7 @@ void MsgScanner_ProbeAck(uint8_t _to) {
 
   // Common payload
   sndMsg.payload.data[0] = SCANNER_PROBE;
-  memcpy(sndMsg.payload.data + 1, _uniqueID, UNIQUE_ID_LEN);
+  copyBuffer(sndMsg.payload.data + 1, _uniqueID, UNIQUE_ID_LEN);
   
   sndMsg.payload.data[payl_len++] = gConfig.version;
   sndMsg.payload.data[payl_len++] = gConfig.type;
@@ -119,7 +119,7 @@ void MsgScanner_ProbeAck(uint8_t _to) {
   sndMsg.payload.data[payl_len++] = gConfig.subID;
   sndMsg.payload.data[payl_len++] = gConfig.rfChannel;
   sndMsg.payload.data[payl_len++] = (gConfig.rfDataRate << 2) + gConfig.rfPowerLevel;
-  memcpy(sndMsg.payload.data + payl_len, gConfig.NetworkID, sizeof(gConfig.NetworkID));
+  copyBuffer(sndMsg.payload.data + payl_len, gConfig.NetworkID, sizeof(gConfig.NetworkID));
   payl_len += sizeof(gConfig.NetworkID);
   
   moSetLength(payl_len);
@@ -141,8 +141,8 @@ uint8_t ParseCommonProtocol(){
     }
     uint8_t realdata[MAX_PAYLOAD];
     _lenPayl = _lenPayl-UNIQUE_ID_LEN;
-    memcpy(realdata,rcvMsg.payload.data+UNIQUE_ID_LEN,_lenPayl);
-    memcpy(rcvMsg.payload.data,realdata,_lenPayl);
+    copyBuffer(realdata, rcvMsg.payload.data + UNIQUE_ID_LEN, _lenPayl);
+    copyBuffer(rcvMsg.payload.data, realdata, _lenPayl);
     miSetLength(_lenPayl);
   }
   uint8_t _cmd = miGetCommand();
@@ -214,7 +214,7 @@ uint8_t ParseCommonProtocol(){
             }
           }
           if(bnetvalid) {
-            memset(gConfig.NetworkID, 0x00, sizeof(gConfig.NetworkID));
+            clearBuffer(gConfig.NetworkID, sizeof(gConfig.NetworkID));
             for(uint8_t j = 0;j<netlen;j++) {
               gConfig.NetworkID[4-j] = rcvMsg.payload.data[3+j];
             }
@@ -317,7 +317,7 @@ void Process_SetupRF(const UC *rfData,uint8_t rflen)
   }
   rfData++;
   bool bValidNet = FALSE;
-  bool newNetwork[6] = {0};
+  UC newNetwork[6] = {0};
   if(rflen > 8)
   {  
     for(uint8_t i = 0;i<6;i++)
@@ -334,7 +334,7 @@ void Process_SetupRF(const UC *rfData,uint8_t rflen)
     }
     else
     {
-      memcpy(newNetwork,rfData,sizeof(newNetwork));
+      copyBuffer(newNetwork, rfData, sizeof(newNetwork));
     }
   }
   rfData = rfData + sizeof(gConfig.NetworkID);
@@ -363,7 +363,7 @@ void Process_SetupRF(const UC *rfData,uint8_t rflen)
   {// nodeid is valid,allow change networkid
     if(!isNodeIdInvalid(gConfig.nodeID))
     {
-      memcpy(gConfig.NetworkID,newNetwork,sizeof(gConfig.NetworkID));
+      copyBuffer(gConfig.NetworkID, newNetwork, sizeof(gConfig.NetworkID));
       bNeedResetNode = TRUE;
     }
   }
@@ -446,7 +446,7 @@ void MsgScanner_ConfigAck(uint8_t offset,uint8_t cfglen,bool _isByUniqueid) {
 //////set config by nodeid&subid data struct/////////////////////
 void Process_SetConfig(u8 _len) {
   uint8_t offset = rcvMsg.payload.data[1];
-  memcpy((void *)((uint16_t)(&gConfig) + offset),rcvMsg.payload.data+2,_len);
+  copyBuffer((UC *)((uint16_t)(&gConfig) + offset), rcvMsg.payload.data+2, _len);
   gIsConfigChanged = TRUE;
 }
 //////set config by uniqueid data struct/////////////////////
@@ -461,6 +461,6 @@ void Process_SetConfig(u8 _len) {
 //////set config by uniqueid data struct/////////////////////
 void Process_SetDevConfig(u8 _len) {
     uint8_t offset = rcvMsg.payload.data[1];
-    memcpy((void *)((uint16_t)(&gConfig) + offset),rcvMsg.payload.data+2+UNIQUE_ID_LEN,_len);
+    copyBuffer((UC *)((uint16_t)(&gConfig) + offset), rcvMsg.payload.data + 2 + UNIQUE_ID_LEN, _len);
     gIsConfigChanged = TRUE;
 }

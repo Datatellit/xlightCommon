@@ -23,15 +23,25 @@ UC NodeID2Type(const UC _nid) {
     return (UC)lv_ntype;
 }
 
+// Clear buffer, to replace memset() so we don't have to include <sting.h>
+void clearBuffer(UC *_buf, const US _len) {
+  for( US i = 0; i < _len; i++ ) _buf[i] = 0x00;
+}
+
+// Copy buffer, to replace memcpy() so we don't have to include <sting.h>
+void copyBuffer(UC *_toBuf, const UC *_fromBuf, const US _len) {
+  for( US i = 0; i < _len; i++ ) _toBuf[i] = _fromBuf[i];
+}
+
 bool isIdentityEmpty(const UC *pId, const UC nLen)
 {
-  for( int i = 0; i < nLen; i++ ) { if(pId[i] > 0) return FALSE; }
+  for( UC i = 0; i < nLen; i++ ) { if(pId[i] > 0) return FALSE; }
   return TRUE;
 }
 
 bool isIdentityEqual(const UC *pId1, const UC *pId2, const UC nLen)
 {
-  for( int i = 0; i < nLen; i++ ) { if(pId1[i] != pId2[i]) return FALSE; }
+  for( UC i = 0; i < nLen; i++ ) { if(pId1[i] != pId2[i]) return FALSE; }
   return TRUE;
 }
 
@@ -50,7 +60,7 @@ void wwdg_init() {
 
 // Feed the Window Watchdog
 void feed_wwdg(void) {
-#ifndef DEBUG_NO_WWDG
+#ifndef DEBUG_NO_WWDG    
   uint8_t cntValue = WWDG_GetCounter() & WWDG_COUNTER;
   if( cntValue < WWDG_WINDOW ) {
     WWDG_SetCounter(WWDG_COUNTER);
@@ -134,7 +144,7 @@ bool Flash_WriteDataBlock(const uint16_t nStartBlock, uint8_t *Buffer, const uin
   uint8_t WriteBuf[FLASH_BLOCK_SIZE];
   uint16_t nBlockNum = (Length - 1) / FLASH_BLOCK_SIZE + 1;
   for( uint16_t block = nStartBlock; block < nStartBlock + nBlockNum; block++ ) {
-    memset(WriteBuf, 0x00, FLASH_BLOCK_SIZE);
+    clearBuffer(WriteBuf, FLASH_BLOCK_SIZE);
     uint8_t maxLen = FLASH_BLOCK_SIZE;
     if( block == nStartBlock + nBlockNum - 1 ) {
       maxLen = Length - (nBlockNum -1)*FLASH_BLOCK_SIZE;

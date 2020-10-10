@@ -19,7 +19,7 @@ void LoadConfig()
     if( IsConfigInvalid() ) {
       Flash_ReadBuf(BACKUP_CONFIG_ADDRESS, (uint8_t *)&gConfig, sizeof(gConfig));
       if( IsConfigInvalid() ) {
-        memset(&gConfig, 0x00, sizeof(gConfig));
+        clearBuffer((UC *)&gConfig, sizeof(gConfig));
         gConfig.version = XLA_VERSION;
         gConfig.present = 0;
         gConfig.enSDTM = 0;
@@ -29,7 +29,7 @@ void LoadConfig()
         gConfig.rfPowerLevel = RF24_PA_MAX;
         gConfig.rfDataRate = RF24_250KBPS;   
         gConfig.type = XLA_PRODUCT_Type;
-        memcpy(gConfig.NetworkID, RF24_BASE_RADIO_ID, ADDRESS_WIDTH);
+        copyBuffer(gConfig.NetworkID, RF24_BASE_RADIO_ID, ADDRESS_WIDTH);
       }
       gIsConfigChanged = TRUE;
     }
@@ -42,9 +42,8 @@ void LoadConfig()
     uint8_t pData[50] = {0};
     uint16_t nLen = (uint16_t)(&(gConfig.nodeID)) - (uint16_t)(&gConfig);
     Flash_ReadBuf(STATUS_DATA_ADDRESS, pData, nLen);
-    if(pData[0] >= XLA_MIN_VER_REQUIREMENT && pData[0] <= XLA_VERSION)
-    {
-      memcpy(&gConfig,pData,nLen);
+    if(pData[0] >= XLA_MIN_VER_REQUIREMENT && pData[0] <= XLA_VERSION) {
+      copyBuffer((UC *)&gConfig, pData, nLen);
     }
 }
 
@@ -66,7 +65,7 @@ void SaveStatusData()
     // Skip the first byte (version)
     uint8_t pData[50] = {0};
     uint16_t nLen = (uint16_t)(&(gConfig.nodeID)) - (uint16_t)(&gConfig);
-    memcpy(pData, (uint8_t *)&gConfig, nLen);
+    copyBuffer(pData, (uint8_t *)&gConfig, nLen);
     if(Flash_WriteDataBlock(STATUS_DATA_NUM, pData, nLen)) {
       gIsStatusChanged = FALSE;
     }
