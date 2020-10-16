@@ -344,7 +344,8 @@ void RF24L01_write_payload(uint8_t *data, uint8_t length) {
   if (a.MAX_RT == 1) {
     //If MAX_RT, clears it so we can send data
     *((uint8_t *) &a) = 0;
-    a.TX_DS = 1;
+    //a.TX_DS = 1;
+    a.MAX_RT = 1;
     RF24L01_write_register(RF24L01_reg_STATUS, (uint8_t *) &a, 1);
   }
   
