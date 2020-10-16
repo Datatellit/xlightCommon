@@ -7,6 +7,10 @@
 /**********************************
 *  NRF24L01 common defines
 ***********************************/
+#define RF_RESULT_SENT                  0x01
+#define RF_RESULT_MAX_RT                0x02
+#define RF_RESULT_RECEIVED              0x04
+
 typedef enum { RF24_PA_MIN = 0,RF24_PA_LOW, RF24_PA_HIGH, RF24_PA_MAX, RF24_PA_ERROR } rf24_pa_dbm_e;
 typedef enum { RF24_1MBPS = 0, RF24_2MBPS, RF24_250KBPS } rf24_datarate_e;
 
@@ -219,6 +223,7 @@ void RF24L01_set_mode_TX(void);
 void RF24L01_set_mode_RX(void);
 uint8_t RF24L01_was_data_sent(void);
 uint8_t RF24L01_is_data_available(void);
+uint8_t RF24L01_get_whatHappened(void);
 void RF24L01_read_payload(uint8_t *data, uint8_t length);
 void RF24L01_write_payload(uint8_t *data, uint8_t length);
 uint8_t RF24L01_read_register(uint8_t register_addr);

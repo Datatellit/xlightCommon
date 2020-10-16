@@ -416,6 +416,16 @@ uint8_t RF24L01_is_data_available(void) {
   return a.RX_DR;
 }
 
+uint8_t RF24L01_get_whatHappened(void) {
+  RF24L01_reg_STATUS_content a;
+  a = RF24L01_get_status();
+  uint8_t res = 0;
+  if (a.TX_DS) res |= RF_RESULT_SENT;
+  if (a.MAX_RT) res |= RF_RESULT_MAX_RT;
+  if (a.RX_DR) res |= RF_RESULT_RECEIVED;
+  return res;
+}
+
 void RF24L01_clear_interrupts(void) {
   /*
   RF24L01_reg_STATUS_content a;
