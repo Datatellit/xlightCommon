@@ -173,9 +173,19 @@ uint8_t ParseCommonProtocol(){
       case NCF_DEV_SET_SUBID:
           isProcessed = 1;
           // [:subID][:devType]
-          if(_lenPayl >= 1) gConfig.subID = rcvMsg.payload.data[0];
-          if(_lenPayl >= 2) gConfig.type = rcvMsg.payload.data[1];
-          gResendPresentation = TRUE;
+          if(_lenPayl >= 1) {
+            if( gConfig.subID != rcvMsg.payload.data[0] ) {
+              gConfig.subID = rcvMsg.payload.data[0];
+              gSubIDChanged = TRUE;
+            }
+            if(_lenPayl >= 2) {
+              if( gConfig.type != rcvMsg.payload.data[1] ) {
+                gConfig.type = rcvMsg.payload.data[1];
+                gSubIDChanged = TRUE;
+              }
+            }
+          }
+          gResendPresentation = gSubIDChanged;          
           break;
       case NCF_DEV_MAX_NMRT:
         isProcessed = 1;
@@ -201,8 +211,11 @@ uint8_t ParseCommonProtocol(){
         }
         if(_lenPayl >= 3) {
           uint8_t subid = rcvMsg.payload.data[2];
-          gConfig.subID = subid;
-          gResendPresentation = TRUE;
+          if( gConfig.subID != subid ) {
+            gConfig.subID = subid;
+            gSubIDChanged = TRUE;
+            gResendPresentation = TRUE;
+          }
         }
         if(_lenPayl >= 4) {
           uint8_t netlen = _lenPayl - 3;

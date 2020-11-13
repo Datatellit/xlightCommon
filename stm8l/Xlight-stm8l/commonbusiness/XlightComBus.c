@@ -7,6 +7,7 @@ bool gIsStatusChanged = FALSE;
 bool gIsConfigChanged = FALSE;
 bool gResetRF = FALSE;
 bool gResetNode = FALSE;
+bool gSubIDChanged = FALSE;
 bool gResendPresentation = FALSE;
 
 uint8_t _uniqueID[UNIQUE_ID_LEN];

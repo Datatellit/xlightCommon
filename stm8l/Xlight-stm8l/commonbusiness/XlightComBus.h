@@ -11,6 +11,7 @@ extern bool gNeedSaveBackup;
 extern bool gIsStatusChanged;
 extern bool gResetRF;
 extern bool gResetNode;
+extern bool gSubIDChanged;
 extern bool gResendPresentation;
 
 extern uint8_t _uniqueID[UNIQUE_ID_LEN];
