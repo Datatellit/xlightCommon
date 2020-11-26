@@ -46,7 +46,8 @@
 #define NCF_DATA_PIR_RANGE              54      // PIR control brightness (off br, on br), payload length = 2
 #define NCF_DATA_FN_SCENARIO            60      // Scenario ID for Remote Fn keys (b1=fn_id, b2=scenario_id), payload length = 2
 #define NCF_DATA_FN_HUE                 61      // Hue for Remote Fn keys (b1_7-4=bmDevice, b1_3-0=fn_id, b2-11=Hue), payload length = 12
-#define NCF_CFG_PIRTIMEOUT              62      // Set pir timeout
+#define NCF_CFG_PIRTIMEOUT              62      // Set pir delay-off timeout
+#define NCF_CFG_PIR_MSG_MAX_INTERVAL    63      // Set pir msg max interval (keepalive)
 
 #define NCF_LEN_DATA_FN_HUE             12
 
