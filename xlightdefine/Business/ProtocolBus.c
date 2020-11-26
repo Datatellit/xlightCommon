@@ -158,9 +158,11 @@ uint8_t ParseCommonProtocol(){
     if( _type == I_REBOOT ) {
       isProcessed = 1;
       if( IS_MINE_SUBID(_sensor) ) {
-          //WWDG->CR = 0x80;
-          gResetNode = TRUE;
-        return 1;
+          uint8_t lv_bColdReboot = 0;
+          if(_lenPayl > 0) lv_bColdReboot = rcvMsg.payload.data[0];
+          if( lv_bColdReboot ) WWDG->CR = 0x80;
+          else gResetNode = TRUE;
+          return 1;
       }
     }else if( _type == I_CONFIG ) {
       // Node Config
