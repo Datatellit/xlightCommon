@@ -1,4 +1,5 @@
-#include <stm8s.h>
+#include <stm8l15x.h> //Required for the stdint typedefs
+
 #include "wwdg.h"
 
 // Window Watchdog
@@ -8,26 +9,20 @@
 uint8_t feedingDog = 0;
 // Initialize Window Watchdog
 void wwdg_init() {
-#ifndef DEBUG_NO_WWDG  
+#ifndef DEBUG_NO_WWDG
   WWDG_Init(WWDG_COUNTER, WWDG_WINDOW);
 #endif  
 }
 
 // Feed the Window Watchdog
 void feed_wwdg(void) {
-#ifndef DEBUG_NO_WWDG  
-  if(feedingDog == 1)
-  {
-    return;
+#ifndef DEBUG_NO_WWDG
+  if( feedingDog == 1 ) return;
+  feedingDog = 1;
+  uint8_t cntValue = WWDG_GetCounter() & WWDG_COUNTER;
+  if( cntValue < WWDG_WINDOW ) {
+    WWDG_SetCounter(WWDG_COUNTER);
   }
-  else
-  {
-    feedingDog = 1;
-    uint8_t cntValue = WWDG_GetCounter() & WWDG_COUNTER;
-    if( cntValue < WWDG_WINDOW ) {
-      WWDG_SetCounter(WWDG_COUNTER);
-    }
-    feedingDog = 0;
-  }
-#endif  
+  feedingDog = 0;
+#endif
 }

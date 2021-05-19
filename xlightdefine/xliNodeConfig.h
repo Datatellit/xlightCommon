@@ -38,6 +38,7 @@
 #define NCF_PAN_SET_BTN_E               33      // Set Panel Button Action
 #define NCF_PAN_SET_BTN_F               34      // Set Panel Button Action
 #define NCF_PAN_SET_BTN_G               35      // Set Panel Button Action
+#define NCF_PAN_SET_BTN_LED             41      // Set Button Backgroung LED
 
 #define NCF_DATA_ALS_RANGE              50      // Lower and upper threshholds of ALS, payload length = 2
 #define NCF_DATA_TEMP_RANGE             51      // Tempreture threshholds, payload length = 2

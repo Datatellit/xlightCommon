@@ -1,6 +1,6 @@
 #include "rf24l01.h"
 #include "MyMessage.h"
-#include "Uart2Dev.h"
+//#include "Uart2Dev.h"
 #include <stm8s_spi.h>
 #include <stm8s_gpio.h>
 
@@ -22,7 +22,7 @@ int8_t wait_flag_status(uint8_t flag,uint8_t status)
     while( SPI_GetFlagStatus(flag)== status && timeout--);
     if(!timeout) 
     {
-      printlog("timeout");
+      //printlog("timeout");
       return 1;
     }
     return 0;
@@ -652,6 +652,16 @@ uint8_t RF24L01_is_data_available(void) {
   RF24L01_reg_STATUS_content a;
   a = RF24L01_get_status();
   return a.RX_DR;
+}
+
+uint8_t RF24L01_get_whatHappened(void) {
+  RF24L01_reg_STATUS_content a;
+  a = RF24L01_get_status();
+  uint8_t res = 0;
+  if (a.TX_DS) res |= RF_RESULT_SENT;
+  if (a.MAX_RT) res |= RF_RESULT_MAX_RT;
+  if (a.RX_DR) res |= RF_RESULT_RECEIVED;
+  return res;
 }
 
 void RF24L01_clear_interrupts(void) {

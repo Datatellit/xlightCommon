@@ -1,14 +1,25 @@
 #include "FlashDataStorage.h"
-#include "Uart2Dev.h"
+#include "wwdg.h"
+#include "string.h"
+
+// is flash writting
 uint8_t flashWritting = 0;
+
+uint8_t *Read_UniqueID(uint8_t *UniqueID, uint16_t Length)  
+{
+  Flash_ReadBuf(UNIQUE_ID_ADDRESS, UniqueID, Length);
+  return UniqueID;
+}
 
 int8_t wait_flashflag_status(uint8_t flag,uint8_t status)
 {
     uint16_t timeout = 60000;
-    while( FLASH_GetFlagStatus(flag)== status && timeout--);
+    while( FLASH_GetFlagStatus(flag)== status && timeout--) {
+      feed_wwdg();
+    }
     if(!timeout) 
     {
-      printlog("timeout!");
+      //printlog("timeout!");
       return 1;
     }
     return 0;

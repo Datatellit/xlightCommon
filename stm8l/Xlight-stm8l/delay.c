@@ -1,8 +1,8 @@
 #include "stm8l15x.h"
 
 #include "delay.h"
-#include "common.h"
 #include "timer4.h"
+#include "wwdg.h"
 
 void delay_ms(u16 time_ms)   // ms
 {

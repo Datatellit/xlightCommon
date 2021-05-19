@@ -149,7 +149,6 @@ uint8_t ParseCommonProtocol(){
   uint8_t _sender = rcvMsg.header.sender;  // The original sender
   uint8_t _type = rcvMsg.header.type;
   uint8_t _sensor = rcvMsg.header.sensor;
-  bool _needAck = (bool)miGetRequestAck();
   //bool _isAck = (bool)miGetAck();
   uint8_t comMsg = 1;
   

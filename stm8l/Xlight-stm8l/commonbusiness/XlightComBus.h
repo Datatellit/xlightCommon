@@ -1,6 +1,8 @@
 #ifndef _XLIGHTCOMBUS_DEV_H_
 #define _XLIGHTCOMBUS_DEV_H_
 
+#include "FlashDataStorage.h"
+
 void LoadConfig();
 void SaveBackupConfig();
 void SaveStatusData();

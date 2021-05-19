@@ -2,7 +2,11 @@
 #define _DEBUGDEFINE_H
 
 // Uncomment this line if in debug mode
-//#define DEBUG_NO_WWDG
+#ifndef NDEBUG
+#ifndef DEBUG_NO_WWDG
+#define DEBUG_NO_WWDG
+#endif
+#endif
 //#define DEBUG_LOG
 
 

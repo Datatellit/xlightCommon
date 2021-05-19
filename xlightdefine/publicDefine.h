@@ -4,6 +4,15 @@
 //#include "stdio.h"
 //#include "string.h"
 
+#if defined (STM8L15X_MD) || defined (STM8L15X_HD) || defined (STM8L15X_LD)
+#include "stm8l15x.h"
+#endif
+
+#if defined(STM8S105) || defined(STM8S005) || defined(STM8AF626x) \
+    || defined(STM8S103) || defined(STM8S003) ||  defined(STM8S903)
+#include "stm8s.h"
+#endif
+
 // Common Data Type
 #define UC                        uint8_t
 #define US                        uint16_t
@@ -116,10 +125,10 @@ typedef enum
 #define IS_SYSTEM_NODEID(nID)       (((nID) > NODEID_MAINDEVICE && (nID) < NODEID_MIN_LAMP) || ((nID) >= NODEID_RF_SCANNER && (nID) <= NODEID_DUMMY))
 #define IS_NOT_DEVICE_NODEID(nID)   (IS_SYSTEM_NODEID(nID) || IS_SENSOR_NODEID(nID) || IS_REMOTE_NODEID(nID) || IS_GROUP_NODEID(nID))
 
-#define IS_MINE_SUBID(nSID)        ((nSID) == 0 || ((nSID) & gConfig.subID))
+#define IS_MINE_SUBID(nSID)         ((nSID) == 0 || ((nSID) & gConfig.subID))
 
 // RF channel for the sensor net, 0-127
-#define RF24_CHANNEL	   		100
+#define RF24_CHANNEL	   	    100
 
 // System Power/Battery Status
 #define SYS_ST_INIT             0   // Also as Off state
