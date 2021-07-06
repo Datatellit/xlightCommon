@@ -18,7 +18,6 @@ int8_t wait_flashflag_status(const uint8_t flag, const uint8_t status)
       feed_wwdg();
     }
     if(!timeout) {
-      //printlog("timeout!");
       return 1;
     }
     return 0;
@@ -37,7 +36,6 @@ bool Flash_WriteBuf(const uint32_t Address, uint8_t *Buffer, const uint16_t Leng
   assert_param(IS_FLASH_DATA_EEPROM_ADDRESS(Address));
   assert_param(IS_FLASH_DATA_EEPROM_ADDRESS(Address+Length));
   if( flashWritting == 1 ) {
-    //printlog("iswriting");
     return FALSE;
   }
   flashWritting = 1;
@@ -74,7 +72,6 @@ bool Flash_WriteBuf(const uint32_t Address, uint8_t *Buffer, const uint16_t Leng
 bool Flash_WriteDataBlock(const uint16_t nStartBlock, uint8_t *Buffer, const uint16_t Length) {
   // Init Flash Read & Write
   if( flashWritting ==  1) {
-    //printlog("iswriting");
     return FALSE;
   }
   flashWritting = 1;

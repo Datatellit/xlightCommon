@@ -7,8 +7,10 @@
 #define DEBUG_NO_WWDG
 #endif
 #endif
-//#define DEBUG_LOG
 
+#ifdef SERIAL_LOG
+#define DEBUG_LOG
+#endif
 
 //#define TEST
 #ifdef TEST

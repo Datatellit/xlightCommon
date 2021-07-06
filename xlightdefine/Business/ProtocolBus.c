@@ -7,6 +7,7 @@ uint8_t bMsgReady = 0;
 MyMessage_t g_rfReceivedMQ[RF_RCV_MQ_LEN];
 uint8_t g_rfRcvMQ_W = 0;
 uint8_t g_rfRcvMQ_R = 0;
+uint8_t g_rfRcvMQ_Lock = 0;
 
 // Assemble message
 void build(uint8_t _destination, uint8_t _sensor, uint8_t _command, uint8_t _type, bool _enableAck, bool _isAck)

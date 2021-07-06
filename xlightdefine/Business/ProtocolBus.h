@@ -27,5 +27,6 @@ extern uint8_t bMsgReady;
 extern MyMessage_t g_rfReceivedMQ[];
 extern uint8_t g_rfRcvMQ_W;
 extern uint8_t g_rfRcvMQ_R;
+extern uint8_t g_rfRcvMQ_Lock;
 
 #endif
